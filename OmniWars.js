@@ -1,4 +1,4 @@
-    import { showCoords, test } from "./Grid.js";
+    import { showCoords, Grid } from "./Grid.js";
 
     const turfColor = "#ADFF2F";
     const beachColor = "#ffbca4";
@@ -14,6 +14,9 @@
 
     const canvasWidth = 800;
     const canvasHeight = 600;
+
+    
+
     var canvas = document.getElementById('canvas');
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;
@@ -22,6 +25,13 @@
     var frameTwo = false;
     var ctx = canvas.getContext('2d');
 
+    Grid.setGameObjectPosition(450, 300, "tank");
+    Grid.setGameObjectPosition(400, 300, "rocket");
+    Grid.setGameObjectPosition(350, 300, "antiAir");
+    Grid.setGameObjectPosition(300, 300, "missile");
+    Grid.setGameObjectPosition(450, 200, "infantry");
+    Grid.setGameObjectPosition(450, 150, "mech");
+
     function draw() {
         var ctx = canvas.getContext('2d');
         ctx.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -29,7 +39,6 @@
         ctx.fillStyle = turfColor;
         ctx.fillRect(0, 0, 800, 600);
         ctx.lineWidth = 3;
-
         ctx.fillStyle = hotPinkTeamColor;
 
         if (frameOne) {
@@ -1054,5 +1063,5 @@
         ctx.strokeStyle='grey';
         ctx.stroke();
     }
-    document.getElementById("canvas").addEventListener("click", showCoords);
+    document.getElementById("canvas").addEventListener("click", Grid.showCoords);
     
