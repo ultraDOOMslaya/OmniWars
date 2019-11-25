@@ -10,6 +10,7 @@
     import { Missile } from "./Units/Missile.js";
 
     const turfColor = "#ADFF2F";
+    const focusColor = "#0000FF";
 
     const redTeamColor = "#E50000";
     const hotPinkTeamColor = "#ff69b4";
@@ -55,6 +56,11 @@
         ctx.fillStyle = turfColor;
         ctx.fillRect(0, 0, 800, 600);
         ctx.lineWidth = 3;
+
+        for (var a = 1; a < GameManager.getSelectedUnit.getMovementRange; a++) {
+            
+        }
+
 
         tank.animate(ticks, ctx, redTeamColor);
         rocket.animate(ticks, ctx, redTeamColor);
