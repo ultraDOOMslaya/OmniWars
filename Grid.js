@@ -1,3 +1,7 @@
+import { GameManager } from "./GameManager";
+import { StaticObject } from "./StaticObject";
+import { Turf } from "./StaticObjects/Turf"
+
 export function showCoords(event) {
     var x = event.clientX - 10;
     var y = event.clientY - 10;
@@ -24,18 +28,44 @@ export const Grid = (function() {
     var y = GridHeight / dimension;
 
     var GridSquareContainer = new Array(x);
-    for (var i = 0; i < GridSquareContainer.length; ++i) {
-        GridSquareContainer[i] = new Array(y);
+    for (var a = 0; a < GridSquareContainer.length; ++a) {
+        GridSquareContainer[a] = new Array(GridSquareContainer.length);
+        for (var b = 0; b < GridSquareContainer[a].length; ++b) {
+            GridSquareContainer[a][b] = new Array(0);
+        }
     }
     
-    var getX = function() {
-        return x;
+    var setDefaultTileSet = function() {
+        for (var a = 0; a < GridSquareContainer.length; ++a) {
+            for (var b = 0; b < GridSquareContainer[a].length; ++b) {
+                let x = a * dimension;
+                let y = b * dimension;
+                var turf = new Turf(x, y);
+                GridSquareContainer[a][b].push(turf);
+            }
+        }
+    };
+
+    var getDimension = function() {
+        return dimension;
+    };
+
+    var getGridX = function(x) {
+        return x * dimension;
+    };
+
+    var getGridY = function(y) {
+        return y * dimension;   
     };
 
     var setGameObjectPosition = function(gridX, gridY, gameObject) {
         let x = gridX / dimension;
         let y = gridY / dimension;
-        GridSquareContainer[x][y] = gameObject;
+        
+        console.log(GridSquareContainer[x][y]);
+        if (typeof GridSquareContainer[x][y] !== 'undefined') {
+            GridSquareContainer[x][y].push(gameObject);
+        }
     };
 
     var showCoords = function(event) {
@@ -43,15 +73,86 @@ export const Grid = (function() {
         let gridY = event.clientY - 10;
         let x = Math.floor(gridX / dimension);
         let y = Math.floor(gridY / dimension);
-        let gameObject = GridSquareContainer[x][y];
+        console.log(GridSquareContainer[x][y]);
+        let gameObject = GridSquareContainer[x][y][GridSquareContainer[x][y].length - 1];
         var coords = "X coordinates: " + x + ", Y coordinates: " + y + ", game object: " + gameObject;
         document.getElementById('showCoords').innerHTML = coords;
+
+        var cords = {
+            x: x,
+            y: y,
+            gameObject: gameObject
+        };
+        GameManager.setSelectedUnit(cords);
+    };
+
+    var cursorTick = function(ctx, offset) {
+        let x = GameManager.getSelectedCoords().x * dimension;
+        let y = GameManager.getSelectedCoords().y * dimension;
+
+        const gray = "#dcdcdc";
+        //cursor selector
+        //top left corner
+        let x_tl = x + offset;
+        let y_tl = y + offset;
+        ctx.fillStyle = gray;
+        ctx.beginPath();
+        ctx.moveTo(x_tl, y_tl);
+        ctx.lineTo(x_tl + 10, y_tl);
+        ctx.lineTo(x_tl, y_tl + 10);
+        ctx.lineTo(x_tl, y_tl);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fill();
+
+        //top right corner
+        let x_tr = x + Grid.getDimension() - offset;
+        let y_tr = y + offset;
+        ctx.fillStyle = gray;
+        ctx.beginPath();
+        ctx.moveTo(x_tr, y_tr);
+        ctx.lineTo(x_tr - 10, y_tr);
+        ctx.lineTo(x_tr, y_tr + 10);
+        ctx.lineTo(x_tr, y_tr);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fill();
+
+        //bottom right corner
+        let x_br = x + Grid.getDimension() - offset;
+        let y_br = y + Grid.getDimension() - offset;
+        ctx.fillStyle = gray;
+        ctx.beginPath();
+        ctx.moveTo(x_br, y_br);
+        ctx.lineTo(x_br - 10, y_br);
+        ctx.lineTo(x_br, y_br - 10);
+        ctx.lineTo(x_br, y_br);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fill();
+
+        //bottom left corner
+        let x_bl = x + offset;
+        let y_bl = y + Grid.getDimension() - offset;
+        ctx.fillStyle = gray;
+        ctx.beginPath();
+        ctx.moveTo(x_bl, y_bl);
+        ctx.lineTo(x_bl + 10, y_bl);
+        ctx.lineTo(x_bl, y_bl - 10);
+        ctx.lineTo(x_bl, y_bl);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fill();
     };
 
     var myPublicApi = {
-        getX,
+        getDimension,
+        getGridX,
+        getGridY,
         setGameObjectPosition,
-        showCoords
+        setDefaultTileSet,
+        showCoords,
+        cursorTick
     };
 
     
