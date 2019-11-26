@@ -1,4 +1,5 @@
 import { GameObject } from "./GameObject";
+import { Unit } from "./Unit";
 
 export const GameManager = (function() {
 
@@ -19,10 +20,11 @@ export const GameManager = (function() {
     };
 
     var setSelectedUnit = function(ray) {
-        console.log("unit is: {}", ray);
+        console.log("unit is: {}", ray.gameObject);
         selectedX = ray.x;
         selectedY = ray.y;
-        var selectedUnit = ray.gameObject;
+        selectedUnit = ray.gameObject;
+        console.log("instance of unit? {}", (selectedUnit instanceof Unit));
     };
 
 

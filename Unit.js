@@ -17,7 +17,7 @@ GameObject.prototype.moveTo = function(x, y) {
 };
 
 GameObject.prototype.getMovementRange = function() {
-    return this.exhausted;
+    return this.movementRange;
 };
 
 GameObject.prototype.exhaustUnit = function() {

@@ -1,5 +1,6 @@
     import { showCoords, Grid } from "./Grid.js";
     import { GameManager } from "./GameManager.js"
+    import { GameObject } from "./GameObject.js";
     import { Unit } from "./Unit.js";
     import { StaticObject } from "./StaticObject.js";
     import { Infantry } from "./Units/Infantry.js";
@@ -57,10 +58,49 @@
         ctx.fillRect(0, 0, 800, 600);
         ctx.lineWidth = 3;
 
-        for (var a = 1; a < GameManager.getSelectedUnit.getMovementRange; a++) {
+        let focusTiles = new Array();
+        console.log(typeof GameManager.getSelectedUnit());
+        if (GameManager.getSelectedUnit() instanceof GameObject) {
+            let iterations = 0;
+            let focusUnit = GameManager.getSelectedUnit();
             
+            let offset = GameManager.getSelectedUnit().getMovementRange();
+            let focusSize = GameManager.getSelectedUnit().getMovementRange() * 2;
+            let startCoords = {
+                start_x: focusUnit.getX(),
+                start_y: focusUnit.getY()
+            };
+
+            for (var a = 0; a <= focusSize; a++) {
+                for (var b = 0; b <= iterations; b++) {
+                    let coords = {
+                        x: startCoords.start_x,
+                        y: (startCoords.start_y - offset + a)
+                    }
+
+                    if (b == 0) {
+                        focusTiles.push({x: coords.x, y: coords.y});
+                    }
+                    else {
+                        focusTiles.push({x: (coords.x - (iterations * 50)), y: coords.y});
+                        focusTiles.push({x: (coords.x + (iterations * 50)), y: coords.y});
+                    }
+                }
+            }
+            //console.log("focus tile: {}", focusTiles);
         }
 
+        
+        for (var tiles = 0; tiles < focusTiles.length; tiles++) {
+            ctx.fillStyle = focusColor;
+            ctx.fillRect(focusTiles[tiles].x, focusTiles[tiles].y, 50, 50);
+        }
+        //ctx.fillStyle = 'blue';
+        //ctx.fillRect(300, 300, 200, 200);
+
+        /*for (tile in focusTiles) {
+
+        }*/
 
         tank.animate(ticks, ctx, redTeamColor);
         rocket.animate(ticks, ctx, redTeamColor);
@@ -90,7 +130,7 @@
     setInterval(function() {
         draw();
         drawOnLoad();
-    }, 250);
+    }, 1000);
     
     //draw();
 

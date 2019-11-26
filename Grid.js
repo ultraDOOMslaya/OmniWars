@@ -75,7 +75,8 @@ export const Grid = (function() {
         let y = Math.floor(gridY / dimension);
         console.log(GridSquareContainer[x][y]);
         let gameObject = GridSquareContainer[x][y][GridSquareContainer[x][y].length - 1];
-        var coords = "X coordinates: " + x + ", Y coordinates: " + y + ", game object: " + gameObject;
+        console.log(gameObject);
+        var coords = "X coordinates: " + x + ", Y coordinates: " + y + ", game object: " + JSON.stringify(gameObject);
         document.getElementById('showCoords').innerHTML = coords;
 
         var cords = {
