@@ -1,5 +1,4 @@
 export function GameObject(x, y, isStaticObject) {
-    console.log("gameobjects x and y and static: {} {} {}", x, y, isStaticObject);
     this.x = x;
     this.y = y;
     this.isStaticObject = isStaticObject;

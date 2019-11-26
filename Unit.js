@@ -3,6 +3,7 @@ import { GameObject } from "./GameObject";
 export function Unit(x, y) {
     this.animationState = 'Idle';
     this.exhausted = false;
+    this.haste = true;
     this.movementRange = 3;
     GameObject.call(this, x, y, false);
 };
@@ -30,6 +31,10 @@ GameObject.prototype.refreshUnit = function() {
 
 GameObject.prototype.isExhausted = function() {
     return this.exhausted;
+};
+
+GameObject.prototype.hasHaste = function() {
+    return this.hasHaste;
 };
 
 Unit.prototype.getAnimationState = function() {

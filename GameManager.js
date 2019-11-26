@@ -5,26 +5,29 @@ export const GameManager = (function() {
 
     let selectedX = 0;
     let selectedY = 0;
-    let selectedUnit = {};
+    let selectedObject = {};
 
     var getSelectedCoords = function() {
-        var cords = {
-            x: selectedX,
-            y: selectedY
-        };
-        return cords;
+        if (selectedObject instanceof GameObject) {
+            var cords = {
+                x: selectedObject.getX(),
+                y: selectedObject.getY()
+            };
+            return cords;
+        }
+        return {x: 0, y: 0};
     };
 
     var getSelectedUnit = function() {
-        return selectedUnit;
+        return selectedObject;
     };
 
     var setSelectedUnit = function(ray) {
         console.log("unit is: {}", ray.gameObject);
         selectedX = ray.x;
         selectedY = ray.y;
-        selectedUnit = ray.gameObject;
-        console.log("instance of unit? {}", (selectedUnit instanceof Unit));
+        selectedObject = ray.gameObject;
+        console.log("instance of unit? {}", (selectedObject instanceof Unit));
     };
 
 

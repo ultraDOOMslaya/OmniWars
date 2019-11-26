@@ -59,12 +59,11 @@
         ctx.lineWidth = 3;
 
         let focusTiles = new Array();
-        console.log(typeof GameManager.getSelectedUnit());
         if (GameManager.getSelectedUnit() instanceof GameObject) {
             let iterations = 0;
             let focusUnit = GameManager.getSelectedUnit();
-            
-            let offset = GameManager.getSelectedUnit().getMovementRange();
+            let diamondOffset = 1;
+            let diamondHalfLength = GameManager.getSelectedUnit().getMovementRange();
             let focusSize = GameManager.getSelectedUnit().getMovementRange() * 2;
             let startCoords = {
                 start_x: focusUnit.getX(),
@@ -75,19 +74,22 @@
                 for (var b = 0; b <= iterations; b++) {
                     let coords = {
                         x: startCoords.start_x,
-                        y: (startCoords.start_y - offset + a)
+                        y: ( startCoords.start_y + ((diamondHalfLength - a) * Grid.getDimension()) )
                     }
 
                     if (b == 0) {
                         focusTiles.push({x: coords.x, y: coords.y});
                     }
                     else {
-                        focusTiles.push({x: (coords.x - (iterations * 50)), y: coords.y});
-                        focusTiles.push({x: (coords.x + (iterations * 50)), y: coords.y});
+                        focusTiles.push({x: (coords.x - (b * Grid.getDimension())), y: coords.y});
+                        focusTiles.push({x: (coords.x + (b * Grid.getDimension())), y: coords.y});
                     }
                 }
+                iterations = iterations + diamondOffset;
+                if(iterations === diamondHalfLength) {
+                    diamondOffset = diamondOffset * -1;
+                }   
             }
-            //console.log("focus tile: {}", focusTiles);
         }
 
         
@@ -130,7 +132,7 @@
     setInterval(function() {
         draw();
         drawOnLoad();
-    }, 1000);
+    }, 250);
     
     //draw();
 
@@ -149,4 +151,5 @@
         ctx.stroke();
     }
     document.getElementById("canvas").addEventListener("click", Grid.showCoords);
+    document.getElementById("canvas").addEventListener("mousedown", Grid.clicked, false);
     

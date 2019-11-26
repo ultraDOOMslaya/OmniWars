@@ -68,6 +68,19 @@ export const Grid = (function() {
         }
     };
 
+    function clicked(e) {
+        switch (e.button) {
+            case 0:
+              showCoords(e);
+              break;
+            case 1:
+              // middle mouse button
+              break;
+            default:
+              rightClickToMove(e);
+        }
+    }
+
     var showCoords = function(event) {
         let gridX = event.clientX - 10;
         let gridY = event.clientY - 10;
@@ -85,6 +98,18 @@ export const Grid = (function() {
             gameObject: gameObject
         };
         GameManager.setSelectedUnit(cords);
+    };
+
+    var rightClickToMove = function(event) {
+        let gridX = event.clientX - 10;
+        let gridY = event.clientY - 10;
+        let x = Math.floor(gridX / dimension);
+        let y = Math.floor(gridY / dimension);
+        console.log(gridX, gridY);
+        GameManager.getSelectedUnit().moveTo((x * dimension), (y * dimension));
+        
+        var coords = "X coordinates: " + x + ", Y coordinates: " + y;
+        document.getElementById('showCoords').innerHTML = coords;
     };
 
     var cursorTick = function(ctx, offset) {
@@ -152,7 +177,9 @@ export const Grid = (function() {
         getGridY,
         setGameObjectPosition,
         setDefaultTileSet,
+        clicked,
         showCoords,
+        rightClickToMove,
         cursorTick
     };
 
