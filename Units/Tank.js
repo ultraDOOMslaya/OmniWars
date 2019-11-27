@@ -3,21 +3,10 @@ import { Colors } from "../Colors";
 
 export function Tank(x, y) {
     this.movementRange = 7;
-    Unit.call(this, x, y);
+    Unit.call(this, x, y, animateFacingRightFrameOne, animateFacingRightFrameTwo);
 };
 
 Tank.prototype = Object.create(Unit.prototype);
-
-Tank.prototype.animate = function(tick, ctx, teamColor) {
-    if (this.getAnimationState() == 'Idle') {
-        if (tick <= 2) {
-            animateFacingRightFrameOne(ctx, teamColor, this.getX(), this.getY());
-        }
-        else if (tick <= 4) {
-            animateFacingRightFrameTwo(ctx, teamColor, this.getX(), this.getY());
-        }
-    }
-}
 
 function animateFacingRightFrameOne(ctx, teamColor, x, y) {
     ctx.fillStyle = teamColor;

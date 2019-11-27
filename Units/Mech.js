@@ -3,21 +3,10 @@ import { Colors } from "../Colors";
 
 export function Mech(x, y) {
     this.movementRange = 3;
-    Unit.call(this, x, y);
+    Unit.call(this, x, y, animateFacingLeftFrameOne, animateFacingLeftFrameTwo);
 };
 
 Mech.prototype = Object.create(Unit.prototype);
-
-Mech.prototype.animate = function(tick, ctx, teamColor) {
-    if (this.getAnimationState() == 'Idle') {
-        if (tick <= 2) {
-            animateFacingLeftFrameOne(ctx, teamColor, this.getX(), this.getY());
-        }
-        else if (tick <= 4) {
-            animateFacingLeftFrameTwo(ctx, teamColor, this.getX(), this.getY());
-        }
-    }
-}
 
 function animateFacingLeftFrameOne(ctx, teamColor, x, y) {
             

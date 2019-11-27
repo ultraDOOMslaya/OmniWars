@@ -19,12 +19,12 @@
     const canvasWidth = 800;
     const canvasHeight = 600;
 
-    var tank = new Tank(450, 300);
-    var rocket = new Rocket(400, 300);
-    var antiAir = new AntiAir(350, 300);
-    var missile = new Missile(300, 300);
-    var infantry = new Infantry(450, 200);
-    var mech = new Mech(450, 150);
+    var tank = new Tank(9, 6);
+    var rocket = new Rocket(8, 6);
+    var antiAir = new AntiAir(7, 6);
+    var missile = new Missile(6, 6);
+    var infantry = new Infantry(9, 4);
+    var mech = new Mech(9, 3);
     
 
     var canvas = document.getElementById('canvas');
@@ -42,6 +42,7 @@
     Grid.setGameObjectPosition(300, 300, missile);
     Grid.setGameObjectPosition(450, 200, infantry);
     Grid.setGameObjectPosition(450, 150, mech);
+    
 
 
     let ticks = 0;
@@ -58,44 +59,11 @@
         ctx.fillRect(0, 0, 800, 600);
         ctx.lineWidth = 3;
 
-        let focusTiles = new Array();
-        if (GameManager.getSelectedUnit() instanceof GameObject) {
-            let iterations = 0;
-            let focusUnit = GameManager.getSelectedUnit();
-            let diamondOffset = 1;
-            let diamondHalfLength = GameManager.getSelectedUnit().getMovementRange();
-            let focusSize = GameManager.getSelectedUnit().getMovementRange() * 2;
-            let startCoords = {
-                start_x: focusUnit.getX(),
-                start_y: focusUnit.getY()
-            };
-
-            for (var a = 0; a <= focusSize; a++) {
-                for (var b = 0; b <= iterations; b++) {
-                    let coords = {
-                        x: startCoords.start_x,
-                        y: ( startCoords.start_y + ((diamondHalfLength - a) * Grid.getDimension()) )
-                    }
-
-                    if (b == 0) {
-                        focusTiles.push({x: coords.x, y: coords.y});
-                    }
-                    else {
-                        focusTiles.push({x: (coords.x - (b * Grid.getDimension())), y: coords.y});
-                        focusTiles.push({x: (coords.x + (b * Grid.getDimension())), y: coords.y});
-                    }
-                }
-                iterations = iterations + diamondOffset;
-                if(iterations === diamondHalfLength) {
-                    diamondOffset = diamondOffset * -1;
-                }   
-            }
-        }
-
-        
+        let focusTiles = GameManager.getFocusZone();
+        //console.log("focus tiles: {}", GameManager.getFocusZone());
         for (var tiles = 0; tiles < focusTiles.length; tiles++) {
             ctx.fillStyle = focusColor;
-            ctx.fillRect(focusTiles[tiles].x, focusTiles[tiles].y, 50, 50);
+            ctx.fillRect(( focusTiles[tiles].x * Grid.getDimension() ), ( focusTiles[tiles].y * Grid.getDimension()), 50, 50);
         }
         //ctx.fillStyle = 'blue';
         //ctx.fillRect(300, 300, 200, 200);

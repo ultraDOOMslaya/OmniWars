@@ -105,11 +105,26 @@ export const Grid = (function() {
         let gridY = event.clientY - 10;
         let x = Math.floor(gridX / dimension);
         let y = Math.floor(gridY / dimension);
+        let validTile = false;
+        const tile = {x: x, y: y};
+        const zones = GameManager.getFocusZone();
         console.log(gridX, gridY);
-        GameManager.getSelectedUnit().moveTo((x * dimension), (y * dimension));
+        console.log("zones: {}", zones);
+        console.log("zone to find: {}", tile);
+        console.log("zone included? {}", zones.includes(tile));
+        for (var a = 0; a < zones.length; a++) {
+            console.log("a: " + a.x + " and " + tile.x);
+            if (zones[a].x === tile.x && zones[a].y === tile.y) {
+                validTile = true;
+            }
+        }
+
+        if (validTile) {
+            GameManager.getSelectedUnit().moveTo(x, y);
         
-        var coords = "X coordinates: " + x + ", Y coordinates: " + y;
-        document.getElementById('showCoords').innerHTML = coords;
+            var coords = "X coordinates: " + x + ", Y coordinates: " + y;
+            document.getElementById('showCoords').innerHTML = coords;
+        }
     };
 
     var cursorTick = function(ctx, offset) {

@@ -3,21 +3,10 @@ import { Colors } from "../Colors";
 
 export function Infantry(x, y) {
     this.movementRange = 4;
-    Unit.call(this, x, y);
+    Unit.call(this, x, y, animateFacingLeftFrameOne, animateFacingLeftFrameTwo);
 };
 
 Infantry.prototype = Object.create(Unit.prototype);
-
-Infantry.prototype.animate = function(tick, ctx, teamColor) {
-    if (this.getAnimationState() == 'Idle') {
-        if (tick <= 2) {
-            animateFacingLeftFrameOne(ctx, teamColor, this.getX(), this.getY());
-        }
-        else if (tick <= 4) {
-            animateFacingLeftFrameTwo(ctx, teamColor, this.getX(), this.getY());
-        }
-    }
-}
 
 function animateFacingLeftFrameOne(ctx, teamColor, x, y) {
     

@@ -1,10 +1,13 @@
 import { GameObject } from "./GameObject";
+import { Grid } from "./Grid";
 
-export function Unit(x, y) {
+export function Unit(x, y, animateIdleOne, animateIdleTwo) {
     this.animationState = 'Idle';
     this.exhausted = false;
     this.haste = true;
     this.movementRange = 3;
+    this.animateIdleOne = animateIdleOne;
+    this.animateIdleTwo = animateIdleTwo;
     GameObject.call(this, x, y, false);
 };
 
@@ -41,3 +44,13 @@ Unit.prototype.getAnimationState = function() {
     return this.animationState;
 };
 
+Unit.prototype.animate = function(tick, ctx, teamColor) {
+    if (this.getAnimationState() == 'Idle') {
+        if (tick <= 2) {
+            this.animateIdleOne(ctx, teamColor, (this.getX() * Grid.getDimension()), (this.getY() * Grid.getDimension()));
+        }
+        else if (tick <= 4) {
+            this.animateIdleTwo(ctx, teamColor, (this.getX() * Grid.getDimension()), (this.getY() * Grid.getDimension()));
+        }
+    }
+}

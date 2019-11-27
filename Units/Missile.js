@@ -3,21 +3,10 @@ import { Colors } from "../Colors";
 
 export function Missile(x, y) {
     this.movementRange = 5;
-    Unit.call(this, x, y);
+    Unit.call(this, x, y, animateFacingRightFrameOne, animateFacingRightFrameTwo);
 };
 
 Missile.prototype = Object.create(Unit.prototype);
-
-Missile.prototype.animate = function(tick, ctx, teamColor) {
-    if (this.getAnimationState() == 'Idle') {
-        if (tick <= 2) {
-            animateFacingRightFrameOne(ctx, teamColor, this.getX(), this.getY());
-        }
-        else if (tick <= 4) {
-            animateFacingRightFrameTwo(ctx, teamColor, this.getX(), this.getY());
-        }
-    }
-}
 
 function animateFacingRightFrameOne(ctx, teamColor, x, y) {
     //Anti-Air Tread
