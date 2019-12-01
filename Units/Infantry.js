@@ -1,9 +1,21 @@
+import { CombatStats } from "../CombatStats";
 import { Unit } from "../Unit";
 import { Colors } from "../Colors";
 
 export function Infantry(x, y) {
-    this.movementRange = 4;
-    Unit.call(this, x, y, animateFacingLeftFrameOne, animateFacingLeftFrameTwo);
+    console.log(CombatStats);
+    this.movementRange = CombatStats.infantry.movementRange;
+    this.attackRange = CombatStats.infantry.attackRange;
+    this.directCombat = CombatStats.infantry.directCombat;
+    this.armored = CombatStats.infantry.armored;
+    this.attackPower = CombatStats.infantry.attackPower;
+    this.airAttack = CombatStats.infantry.airAttack;
+    this.defense = CombatStats.infantry.defense;
+    this.tankBuster = CombatStats.infantry.tankBuster;
+    this.groundOnly = CombatStats.infantry.groundOnly;
+    this.unitType = CombatStats.infantry.unitType;
+    Unit.call(this, x, y, this.directCombat, this.armored, this.movementRange, this.attackRange, animateFacingLeftFrameOne, 
+              animateFacingLeftFrameTwo, this.attackPower, this.airAttack, this.defense, this.tankBuster, this.groundOnly, this.unitType);
 };
 
 Infantry.prototype = Object.create(Unit.prototype);

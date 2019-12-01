@@ -86,18 +86,25 @@ export const Grid = (function() {
         let gridY = event.clientY - 10;
         let x = Math.floor(gridX / dimension);
         let y = Math.floor(gridY / dimension);
-        console.log(GridSquareContainer[x][y]);
         let gameObject = GridSquareContainer[x][y][GridSquareContainer[x][y].length - 1];
-        console.log(gameObject);
-        var coords = "X coordinates: " + x + ", Y coordinates: " + y + ", game object: " + JSON.stringify(gameObject);
-        document.getElementById('showCoords').innerHTML = coords;
-
+        
         var cords = {
             x: x,
             y: y,
             gameObject: gameObject
         };
-        GameManager.setSelectedUnit(cords);
+
+        if (GameManager.isSelectedObjectUnit() && GameManager.getSelectedUnit().isAttacking()) {
+            let dmgPercentage = GameManager.combat(gameObject);
+            var coords = "Damage to inflict: " + dmgPercentage;
+            document.getElementById('showCoords').innerHTML = coords;
+        }
+        else {
+            GameManager.setSelectedUnit(cords);
+            GameManager.step1Initiate();
+            var coords = "X coordinates: " + x + ", Y coordinates: " + y + ", game object: " + JSON.stringify(gameObject);
+            document.getElementById('showCoords').innerHTML = coords;
+        }
     };
 
     var rightClickToMove = function(event) {
@@ -108,24 +115,27 @@ export const Grid = (function() {
         let validTile = false;
         const tile = {x: x, y: y};
         const zones = GameManager.getFocusZone();
-        console.log(gridX, gridY);
-        console.log("zones: {}", zones);
-        console.log("zone to find: {}", tile);
-        console.log("zone included? {}", zones.includes(tile));
+
         for (var a = 0; a < zones.length; a++) {
-            console.log("a: " + a.x + " and " + tile.x);
             if (zones[a].x === tile.x && zones[a].y === tile.y) {
                 validTile = true;
             }
         }
 
         if (validTile) {
-            GameManager.getSelectedUnit().moveTo(x, y);
+            GameManager.step1AfterMath(x, y);
         
             var coords = "X coordinates: " + x + ", Y coordinates: " + y;
             document.getElementById('showCoords').innerHTML = coords;
         }
     };
+
+    var replacePositions = function(originalX, originalY, gameObject) {
+        GridSquareContainer[originalX][originalY].pop();
+        GridSquareContainer[gameObject.getX()][gameObject.getY()].push(gameObject);
+    };
+
+
 
     var cursorTick = function(ctx, offset) {
         let x = GameManager.getSelectedCoords().x * dimension;
@@ -195,6 +205,7 @@ export const Grid = (function() {
         clicked,
         showCoords,
         rightClickToMove,
+        replacePositions,
         cursorTick
     };
 

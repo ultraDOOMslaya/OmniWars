@@ -1,9 +1,20 @@
+import { CombatStats } from "../CombatStats";
 import { Unit } from "../Unit";
 import { Colors } from "../Colors";
 
 export function Rocket(x, y) {
-    this.movementRange = 5;
-    Unit.call(this, x, y, animateFacingRightFrameOne, animateFacingRightFrameTwo);
+    this.movementRange = CombatStats.rocket.movementRange;
+    this.attackRange = CombatStats.rocket.attackRange;
+    this.directCombat = CombatStats.rocket.directCombat;
+    this.armored = CombatStats.rocket.armored;
+    this.attackPower = CombatStats.rocket.attackPower;
+    this.airAttack = CombatStats.rocket.airAttack;
+    this.defense = CombatStats.rocket.defense;
+    this.tankBuster = CombatStats.rocket.tankBuster;
+    this.groundOnly = CombatStats.rocket.groundOnly;
+    this.unitType = CombatStats.rocket.unitType;
+    Unit.call(this, x, y, this.directCombat, this.armored, this.movementRange, this.attackRange, animateFacingRightFrameOne, 
+              animateFacingRightFrameTwo, this.attackPower, this.airAttack, this.defense, this.tankBuster, this.groundOnly, this.unitType);
 };
 
 Rocket.prototype = Object.create(Unit.prototype);

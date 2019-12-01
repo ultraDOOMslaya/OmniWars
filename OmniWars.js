@@ -11,7 +11,6 @@
     import { Missile } from "./Units/Missile.js";
 
     const turfColor = "#ADFF2F";
-    const focusColor = "#0000FF";
 
     const redTeamColor = "#E50000";
     const hotPinkTeamColor = "#ff69b4";
@@ -19,11 +18,11 @@
     const canvasWidth = 800;
     const canvasHeight = 600;
 
+    var infantry = new Infantry(9, 4);
     var tank = new Tank(9, 6);
     var rocket = new Rocket(8, 6);
     var antiAir = new AntiAir(7, 6);
-    var missile = new Missile(6, 6);
-    var infantry = new Infantry(9, 4);
+    var missile = new Missile(6, 6);    
     var mech = new Mech(9, 3);
     
 
@@ -36,14 +35,56 @@
     var ctx = canvas.getContext('2d');
 
     Grid.setDefaultTileSet();
+    Grid.setGameObjectPosition(450, 200, infantry);
     Grid.setGameObjectPosition(450, 300, tank);
     Grid.setGameObjectPosition(400, 300, rocket);
     Grid.setGameObjectPosition(350, 300, antiAir);
     Grid.setGameObjectPosition(300, 300, missile);
-    Grid.setGameObjectPosition(450, 200, infantry);
     Grid.setGameObjectPosition(450, 150, mech);
     
+    (function() {
+        var step1Dialog = document.getElementById("step1Dialog"); 
+        var moveButton = document.getElementById('selectMovement');
+        var attackButton = document.getElementById('selectAttack');
+        var cancelButton = document.getElementById('cancelStep1');
 
+        moveButton.addEventListener('click', function() {
+            step1Dialog.close();
+            GameManager.getSelectedUnit().setMoving();  
+        });
+
+        attackButton.addEventListener('click', function() {
+            step1Dialog.close();
+            GameManager.getSelectedUnit().setAttacking();
+        });
+
+        cancelButton.addEventListener('click', function() {
+            step1Dialog.close();
+            GameManager.putItBack();
+        });
+    })();
+
+    (function() {
+        var step2Dialog = document.getElementById("step2Dialog"); 
+        var attackButton = document.getElementById('selectAttack2');
+        var waitButton = document.getElementById('selectWait');
+        var cancelButton = document.getElementById('cancelStep2');
+
+        attackButton.addEventListener('click', function() {
+            step2Dialog.close();
+            GameManager.getSelectedUnit().setAttacking();  
+        });
+
+        waitButton.addEventListener('click', function() {
+            step2Dialog.close();
+            GameManager.commitUnit();
+        });
+
+        cancelButton.addEventListener('click', function() {
+            step2Dialog.close();
+            GameManager.putItBack();
+        });
+    })();
 
     let ticks = 0;
     function draw() {
@@ -60,25 +101,17 @@
         ctx.lineWidth = 3;
 
         let focusTiles = GameManager.getFocusZone();
-        //console.log("focus tiles: {}", GameManager.getFocusZone());
         for (var tiles = 0; tiles < focusTiles.length; tiles++) {
-            ctx.fillStyle = focusColor;
+            ctx.fillStyle = GameManager.getZoneColor();
             ctx.fillRect(( focusTiles[tiles].x * Grid.getDimension() ), ( focusTiles[tiles].y * Grid.getDimension()), 50, 50);
         }
-        //ctx.fillStyle = 'blue';
-        //ctx.fillRect(300, 300, 200, 200);
-
-        /*for (tile in focusTiles) {
-
-        }*/
-
+        
+        infantry.animate(ticks, ctx, redTeamColor);
         tank.animate(ticks, ctx, redTeamColor);
         rocket.animate(ticks, ctx, redTeamColor);
         antiAir.animate(ticks, ctx, redTeamColor);
-        missile.animate(ticks, ctx, redTeamColor);
-        infantry.animate(ticks, ctx, redTeamColor);
+        missile.animate(ticks, ctx, redTeamColor);        
         mech.animate(ticks, ctx, hotPinkTeamColor);
-        
         
         Grid.cursorTick(ctx, ticks);
 
@@ -120,4 +153,18 @@
     }
     document.getElementById("canvas").addEventListener("click", Grid.showCoords);
     document.getElementById("canvas").addEventListener("mousedown", Grid.clicked, false);
+    
+    document.onkeydown = function(evt) {
+        evt = evt || window.event;
+        var isEscape = false;
+        if ("key" in evt) {
+            isEscape = (evt.key === "Escape" || evt.key === "Esc");
+        } else {
+            isEscape = (evt.keyCode === 27);
+        }
+        if (isEscape) {
+            GameManager.resetState();
+        }
+    };
+    
     

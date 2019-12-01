@@ -1,9 +1,20 @@
+import { CombatStats } from "../CombatStats";
 import { Unit } from "../Unit";
 import { Colors } from "../Colors";
 
 export function AntiAir(x, y) {
-    this.movementRange = 7;
-    Unit.call(this, x, y, animateFacingRightFrameOne, animateFacingRightFrameTwo);
+    this.movementRange = CombatStats.antiAir.movementRange;
+    this.attackRange = CombatStats.antiAir.attackRange;
+    this.directCombat = CombatStats.antiAir.directCombat;
+    this.armored = CombatStats.antiAir.armored;
+    this.attackPower = CombatStats.antiAir.attackPower;
+    this.airAttack = CombatStats.antiAir.airAttack;
+    this.defense = CombatStats.antiAir.defense;
+    this.tankBuster = CombatStats.antiAir.tankBuster;
+    this.groundOnly = CombatStats.antiAir.groundOnly;
+    this.unitType = CombatStats.antiAir.unitType;
+    Unit.call(this, x, y, this.directCombat, this.armored, this.movementRange, this.attackRange, animateFacingRightFrameOne, 
+              animateFacingRightFrameTwo, this.attackPower, this.airAttack, this.defense, this.tankBuster, this.groundOnly, this.unitType);
 };
 
 AntiAir.prototype = Object.create(Unit.prototype);

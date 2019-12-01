@@ -1,9 +1,20 @@
+import { CombatStats } from "../CombatStats";
 import { Unit } from "../Unit";
 import { Colors } from "../Colors";
 
 export function Mech(x, y) {
-    this.movementRange = 3;
-    Unit.call(this, x, y, animateFacingLeftFrameOne, animateFacingLeftFrameTwo);
+    this.movementRange = CombatStats.mech.movementRange;
+    this.attackRange = CombatStats.mech.attackRange;
+    this.directCombat = CombatStats.mech.directCombat;
+    this.armored = CombatStats.mech.armored;
+    this.attackPower = CombatStats.mech.attackPower;
+    this.airAttack = CombatStats.mech.airAttack;
+    this.defense = CombatStats.mech.defense;
+    this.tankBuster = CombatStats.mech.tankBuster;
+    this.groundOnly = CombatStats.mech.groundOnly;
+    this.unitType = CombatStats.mech.unitType;
+    Unit.call(this, x, y, this.directCombat, this.armored, this.movementRange, this.attackRange, animateFacingLeftFrameOne, 
+              animateFacingLeftFrameTwo, this.attackPower, this.airAttack, this.defense, this.tankBuster, this.groundOnly, this.unitType);
 };
 
 Mech.prototype = Object.create(Unit.prototype);

@@ -1,9 +1,20 @@
+import { CombatStats } from "../CombatStats";
 import { Unit } from "../Unit";
 import { Colors } from "../Colors";
 
 export function Tank(x, y) {
-    this.movementRange = 7;
-    Unit.call(this, x, y, animateFacingRightFrameOne, animateFacingRightFrameTwo);
+    this.movementRange = CombatStats.tank.movementRange;
+    this.attackRange = CombatStats.tank.attackRange;
+    this.directCombat = CombatStats.tank.directCombat;
+    this.armored = CombatStats.tank.armored;
+    this.attackPower = CombatStats.tank.attackPower;
+    this.airAttack = CombatStats.tank.airAttack;
+    this.defense = CombatStats.tank.defense;
+    this.tankBuster = CombatStats.tank.tankBuster;
+    this.groundOnly = CombatStats.tank.groundOnly;
+    this.unitType = CombatStats.tank.unitType;
+    Unit.call(this, x, y, this.directCombat, this.armored, this.movementRange, this.attackRange, animateFacingRightFrameOne, 
+              animateFacingRightFrameTwo, this.attackPower, this.airAttack, this.defense, this.tankBuster, this.groundOnly, this.unitType);
 };
 
 Tank.prototype = Object.create(Unit.prototype);

@@ -1,9 +1,20 @@
+import { CombatStats } from "../CombatStats";
 import { Unit } from "../Unit";
 import { Colors } from "../Colors";
 
 export function Missile(x, y) {
-    this.movementRange = 5;
-    Unit.call(this, x, y, animateFacingRightFrameOne, animateFacingRightFrameTwo);
+    this.movementRange = CombatStats.missile.movementRange;
+    this.attackRange = CombatStats.missile.attackRange;
+    this.directCombat = CombatStats.missile.directCombat;
+    this.armored = CombatStats.missile.armored;
+    this.attackPower = CombatStats.missile.attackPower;
+    this.airAttack = CombatStats.missile.airAttack;
+    this.defense = CombatStats.missile.defense;
+    this.tankBuster = CombatStats.missile.tankBuster;
+    this.groundOnly = CombatStats.missile.groundOnly;
+    this.unitType = CombatStats.missile.unitType;
+    Unit.call(this, x, y, this.directCombat, this.armored, this.movementRange, this.attackRange, animateFacingRightFrameOne, 
+              animateFacingRightFrameTwo, this.attackPower, this.airAttack, this.defense, this.tankBuster, this.groundOnly, this.unitType);
 };
 
 Missile.prototype = Object.create(Unit.prototype);

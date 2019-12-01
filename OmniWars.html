@@ -1,6 +1,61 @@
 <body oncontextmenu="return false;">
+    <dialog id="step1Dialog">
+        <menu>
+            <button id="selectMovement">Move</button>
+            <button id="selectAttack">Fire</button>
+            <button id="cancelStep1">Cancel</button>
+        </menu>
+    </dialog>
+
+    <dialog id="step2Dialog">
+        <menu>
+            <button id="selectAttack2">Fire</button>
+            <button id="selectWait">Wait</button>
+            <button id="cancelStep2">Cancel</button>
+        </menu>
+    </dialog>
+
     <canvas id="canvas" width="800" height="600" style="border: 1px solid; width: 800px; height: 600px"></canvas>
     <p id='showCoords'></p>
+
+    <button onclick="showDialog()">Show dialog</button>
+    <button id="ReEnableUnits">ReEnable Units</button>
+
+    <dialog id="step2Dialog">Exhaust Dialog</dialog>
 </body>
 
+
+
+<script>
+    var x = document.getElementById("step1Dialog"); 
+    
+    function showDialog() { 
+      x.show(); 
+    } 
+    
+    function closeDialog() { 
+      x.close(); 
+    } 
+    </script>
+
 <script src="OmniWars.js"></script>
+
+<style>
+body {
+    position: relative;
+}
+
+dialog {
+    padding: 0px;
+}
+
+menu {
+    padding: 5px;
+    display: grid;
+    margin: 5px;
+}
+
+menu button {
+    margin-bottom: 5px;
+}
+</style>

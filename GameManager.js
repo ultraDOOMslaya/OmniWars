@@ -1,10 +1,13 @@
 import { GameObject } from "./GameObject";
+import { UnitTypes } from "./Units/UnitTypes";
 import { Unit } from "./Unit";
+import { Colors } from "./Colors";
+import { Grid } from "./Grid";
 
 export const GameManager = (function() {
 
-    let selectedX = 0;
-    let selectedY = 0;
+    let originalX = 0;
+    let originalY = 0;
     let selectedObject = {};
 
     var getSelectedCoords = function() {
@@ -22,21 +25,45 @@ export const GameManager = (function() {
         return selectedObject;
     };
 
+    var getZoneColor = function() {
+        if (selectedObject instanceof Unit) {
+            if (selectedObject.isMoving()) {
+                return Colors.focusColor;
+            }
+            else if (selectedObject.isAttacking()){
+                return Colors.attackColor;
+            }
+        }
+        return;
+    }
+
     var setSelectedUnit = function(ray) {
-        console.log("unit is: {}", ray.gameObject);
-        selectedX = ray.x;
-        selectedY = ray.y;
+        putItBack();
+        originalX = ray.x;
+        originalY = ray.y;
         selectedObject = ray.gameObject;
-        console.log("instance of unit? {}", (selectedObject instanceof Unit));
     };
 
     var getFocusZone = function() {
+        let movementRange;
+        let focusSize;
         let focusTiles = new Array();
         if (selectedObject instanceof Unit) {
+            if (selectedObject.isMoving()) {
+                movementRange = selectedObject.getMovementRange();
+                focusSize = selectedObject.getMovementRange() * 2;
+            }
+            else if (selectedObject.isAttacking()){
+                movementRange = selectedObject.getAttackRange();
+                focusSize = selectedObject.getAttackRange() * 2;
+            }
+            else {
+                return focusTiles;
+            }
+
             let iterations = 0;
             let diamondOffset = 1;
-            let movementRange = selectedObject.getMovementRange();
-            let focusSize = selectedObject.getMovementRange() * 2;
+            
             let startCoords = {
                 start_x: selectedObject.getX(),
                 start_y: selectedObject.getY()
@@ -66,11 +93,78 @@ export const GameManager = (function() {
         return focusTiles;
     };
 
+    var step1Initiate = function() {
+        if (isSelectedObjectUnit()) {
+            if (!selectedObject.isExhausted()) {
+                document.getElementById('step1Dialog').show();
+            }
+        }
+    };
+
+    var step1AfterMath = function(x, y) {
+        selectedObject.moveTo(x, y);
+        selectedObject.standBy();
+        document.getElementById('step2Dialog').show();
+    };
+
+    var isSelectedObjectUnit = function() {
+        if (selectedObject instanceof Unit) {
+            return true;
+        }
+        return false;
+    };
+
+    var putItBack = function() {
+        if (isSelectedObjectUnit()) {
+            selectedObject.moveTo(originalX, originalY);
+            selectedObject.standBy();
+        }
+    };
+
+    var resetState = function() {
+        putItBack();
+        document.getElementById("step1Dialog").close();
+        document.getElementById("step2Dialog").close();
+    };
+
+    var commitUnit = function() {
+        Grid.replacePositions(originalX, originalY, selectedObject);
+        originalX = selectedObject.getX();
+        originalY = selectedObject.getY();
+        if (isSelectedObjectUnit()) {
+            selectedObject.exhaustUnit();
+        }
+    };
+
+    var combat = function(enemyUnit) {
+        let damage = selectedObject.getAttackPower();
+        if (enemyUnit.getUnitType() === UnitTypes.Air) {
+            damage = selectedObject.getAirAttack();
+        }
+        
+        damage = damage - enemyUnit.getDefense();
+
+        if (enemyUnit.isArmored() && selectedObject.isTankBuster()) {
+            damage = damage * 2;
+        }
+
+        let total = selectedObject.getHitPoints() * damage;
+        return total;
+    }
+
     var myPublicAPI = {
         getSelectedCoords,
         getSelectedUnit,
         getFocusZone,
-        setSelectedUnit
+        getZoneColor,
+        setSelectedUnit,
+        step1Initiate,
+        step1AfterMath,
+        isSelectedObjectUnit,
+        putItBack,
+        resetState,
+        commitUnit,
+        combat
     };
 
     return myPublicAPI;
