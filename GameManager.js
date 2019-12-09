@@ -107,6 +107,12 @@ export const GameManager = (function() {
         document.getElementById('step2Dialog').show();
     };
 
+    var step2AfterMath = function(enemyUnit) {
+        dealDamage(enemyUnit);
+        selectedObject.standBy();
+        commitUnit();
+    }
+
     var isSelectedObjectUnit = function() {
         if (selectedObject instanceof Unit) {
             return true;
@@ -136,21 +142,34 @@ export const GameManager = (function() {
         }
     };
 
-    var combat = function(enemyUnit) {
-        let damage = selectedObject.getAttackPower();
+    var combat = function(attacker, enemyUnit) {
+
+        let damage = attacker.getAttackPower();
         if (enemyUnit.getUnitType() === UnitTypes.Air) {
-            damage = selectedObject.getAirAttack();
+            damage = attacker.getAirAttack();
         }
         
         damage = damage - enemyUnit.getDefense();
 
-        if (enemyUnit.isArmored() && selectedObject.isTankBuster()) {
+        if (enemyUnit.isArmored() && attacker.isTankBuster()) {
             damage = damage * 2;
         }
 
-        let total = selectedObject.getHitPoints() * damage;
+        let total = attacker.getHitPoints() * damage;
         return total;
-    }
+    };
+
+    var dealDamage = function(enemyUnit) {
+        let attackerDamage = combat(selectedObject, enemyUnit) / 10;
+        let attackerModifier = Math.floor(Math.random() * 2);  // returns a random integer from 0 to 1
+        attackerDamage = attackerDamage + attackerModifier;
+        enemyUnit.takeDamage(attackerDamage);
+
+        let defenderDamage = combat(enemyUnit, selectedObject) / 10;
+        let defenderModifier = Math.floor(Math.random() * 2) + 1;  // returns a random integer from 0 to 2 (defender equalizer)
+        defenderDamage = defenderDamage + defenderModifier;
+        selectedObject.takeDamage(defenderDamage);
+    };
 
     var myPublicAPI = {
         getSelectedCoords,
@@ -160,11 +179,13 @@ export const GameManager = (function() {
         setSelectedUnit,
         step1Initiate,
         step1AfterMath,
+        step2AfterMath,
         isSelectedObjectUnit,
         putItBack,
         resetState,
         commitUnit,
-        combat
+        combat,
+        dealDamage
     };
 
     return myPublicAPI;

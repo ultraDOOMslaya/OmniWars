@@ -95,7 +95,9 @@ export const Grid = (function() {
         };
 
         if (GameManager.isSelectedObjectUnit() && GameManager.getSelectedUnit().isAttacking()) {
-            let dmgPercentage = GameManager.combat(gameObject);
+
+            // Need to check if tile clicked is in the fire zone and has an enemy
+            let dmgPercentage = GameManager.combat(GameManager.getSelectedUnit(), gameObject);
             var coords = "Damage to inflict: " + dmgPercentage;
             document.getElementById('showCoords').innerHTML = coords;
         }
@@ -113,6 +115,7 @@ export const Grid = (function() {
         let x = Math.floor(gridX / dimension);
         let y = Math.floor(gridY / dimension);
         let validTile = false;
+        let gameObject = GridSquareContainer[x][y][GridSquareContainer[x][y].length - 1];
         const tile = {x: x, y: y};
         const zones = GameManager.getFocusZone();
 
@@ -122,11 +125,17 @@ export const Grid = (function() {
             }
         }
 
-        if (validTile) {
-            GameManager.step1AfterMath(x, y);
-        
-            var coords = "X coordinates: " + x + ", Y coordinates: " + y;
-            document.getElementById('showCoords').innerHTML = coords;
+        if (GameManager.isSelectedObjectUnit() && GameManager.getSelectedUnit().isAttacking()) {
+            GameManager.step2AfterMath(gameObject);  
+        }
+        else {
+            //Move the selectedUnit
+            if (validTile) {
+                GameManager.step1AfterMath(x, y);
+            
+                var coords = "X coordinates: " + x + ", Y coordinates: " + y;
+                document.getElementById('showCoords').innerHTML = coords;
+            }
         }
     };
 
