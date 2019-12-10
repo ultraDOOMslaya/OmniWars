@@ -145,6 +145,14 @@ Unit.prototype.isTankBuster = function() {
     return this.tankBuster;
 };
 
+Unit.prototype.takeDamage = function(value) {
+    this.hitPoints = this.hitPoints - value;
+    if (this.hitPoints <= 0) {
+        //probably needs something more involved...
+        delete this;
+    }
+}
+
 Unit.prototype.animate = function(tick, ctx, teamColor) {
     let baseColorPercentage = 0;
     if (this.isExhausted()) {
