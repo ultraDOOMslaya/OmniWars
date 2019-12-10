@@ -153,9 +153,22 @@ Unit.prototype.animate = function(tick, ctx, teamColor) {
     if (this.getAnimationState() == 'Idle') {
         if (tick <= 2) {
             this.animateIdleOne(ctx, Colors.colorMutator(teamColor, baseColorPercentage), (this.getX() * Grid.getDimension()), (this.getY() * Grid.getDimension()));
+            renderHitPoints(ctx, Colors, this.getHitPoints(), (this.getX() * Grid.getDimension()) + 25, (this.getY() * Grid.getDimension()) + 43);
         }
         else if (tick <= 4) {
             this.animateIdleTwo(ctx, Colors.colorMutator(teamColor, baseColorPercentage), (this.getX() * Grid.getDimension()), (this.getY() * Grid.getDimension()));
+            renderHitPoints(ctx, Colors, this.getHitPoints(), (this.getX() * Grid.getDimension()) + 25, (this.getY() * Grid.getDimension()) + 43 + 3);
         }
+    }
+}
+
+function renderHitPoints(ctx, Colors, hitPoints, x, y) {
+    if (hitPoints < 10) {
+        ctx.font = "bold 15px Comic Sans MS";
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = Colors.black;
+        ctx.strokeText(hitPoints, x, y)
+        ctx.fillStyle = Colors.white;
+        ctx.fillText(hitPoints, x, y);
     }
 }

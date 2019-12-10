@@ -6,10 +6,13 @@ export const Colors = (function() {
     var gainsborough = "#dfcdfc";
     var black = "#000000";
     var brown = "#964b00";
+    var gray = "#dcdcdc";
+    var white = "#fff";
     var skin = "#ffdbac";
     var skyBlue = "#87ceeb";
     var focusColor = "#0000FF";
     var attackColor = "#F05E23";
+    var fontColor = "#3d3d3d";
 
     function colorMutator(color, percent) {
 
@@ -38,12 +41,15 @@ export const Colors = (function() {
         redTeamColor,
         hotPinkTeamColor,
         gainsborough,
+        white,
         black,
         brown,
+        gray,
         skin,
         skyBlue,
         focusColor,
         attackColor,
+        fontColor,
         colorMutator
     };
 
