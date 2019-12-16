@@ -15,16 +15,9 @@
     const redTeamColor = "#E50000";
     const hotPinkTeamColor = "#ff69b4";
 
+    const size = Grid.getGridSize();
     const canvasWidth = 800;
     const canvasHeight = 600;
-
-    var infantry = new Infantry(9, 4);
-    var tank = new Tank(9, 6);
-    var rocket = new Rocket(8, 6);
-    var antiAir = new AntiAir(7, 6);
-    var missile = new Missile(6, 6);    
-    var mech = new Mech(9, 3);
-    
 
     var canvas = document.getElementById('canvas');
     canvas.width = canvasWidth;
@@ -35,12 +28,13 @@
     var ctx = canvas.getContext('2d');
 
     Grid.setDefaultTileSet();
-    Grid.setGameObjectPosition(450, 200, infantry);
-    Grid.setGameObjectPosition(450, 300, tank);
-    Grid.setGameObjectPosition(400, 300, rocket);
-    Grid.setGameObjectPosition(350, 300, antiAir);
-    Grid.setGameObjectPosition(300, 300, missile);
-    Grid.setGameObjectPosition(450, 150, mech);
+
+    Grid.addGameObject(9, 4, new Infantry(9, 4));
+    Grid.addGameObject(9, 6, new Tank(9, 6));
+    Grid.addGameObject(8, 6, new Rocket(8, 6));
+    Grid.addGameObject(7, 6, new AntiAir(7, 6));
+    Grid.addGameObject(6, 6, new Missile(6, 6));
+    Grid.addGameObject(9, 3, new Mech(9, 3));
     
     (function() {
         var step1Dialog = document.getElementById("step1Dialog"); 
@@ -106,12 +100,14 @@
             ctx.fillRect(( focusTiles[tiles].x * Grid.getDimension() ), ( focusTiles[tiles].y * Grid.getDimension()), 50, 50);
         }
         
-        infantry.animate(ticks, ctx, redTeamColor);
+        Grid.animateObjects(ticks, ctx, redTeamColor);
+
+        /*infantry.animate(ticks, ctx, redTeamColor);
         tank.animate(ticks, ctx, redTeamColor);
         rocket.animate(ticks, ctx, redTeamColor);
         antiAir.animate(ticks, ctx, redTeamColor);
         missile.animate(ticks, ctx, redTeamColor);        
-        mech.animate(ticks, ctx, hotPinkTeamColor);
+        mech.animate(ticks, ctx, hotPinkTeamColor);*/
         
         Grid.cursorTick(ctx, ticks);
 

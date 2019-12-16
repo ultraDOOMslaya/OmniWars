@@ -1,6 +1,7 @@
 import { GameManager } from "./GameManager";
 import { StaticObject } from "./StaticObject";
 import { Turf } from "./StaticObjects/Turf"
+import { Unit } from "./Unit";
 
 export function showCoords(event) {
     var x = event.clientX - 10;
@@ -58,6 +59,24 @@ export const Grid = (function() {
         return y * dimension;   
     };
 
+    var getGridSize = function() {
+        var size = {
+            width: GridWidth / dimension,
+            height: GridHeight / dimension
+        };
+        return size;
+    }
+
+    var addGameObject = function(gridX, gridY, gameObject) {
+        let x = gridX;
+        let y = gridY;
+        
+        console.log(GridSquareContainer[x][y]);
+        if (typeof GridSquareContainer[x][y] !== 'undefined') {
+            GridSquareContainer[x][y].push(gameObject);
+        }
+    };
+
     var setGameObjectPosition = function(gridX, gridY, gameObject) {
         let x = gridX / dimension;
         let y = gridY / dimension;
@@ -67,6 +86,20 @@ export const Grid = (function() {
             GridSquareContainer[x][y].push(gameObject);
         }
     };
+
+    var animateObjects = function(ticks, ctx, teamColor) {
+        for (let a = 0; a < GridSquareContainer.length - 1; ++a) {
+            for (let b = 0; b < GridSquareContainer[a].length - 1; ++b) {
+                if (GridSquareContainer[a][b][GridSquareContainer[a][b].length - 1] instanceof Unit) {
+                    GridSquareContainer[a][b][GridSquareContainer[a][b].length - 1].animate(ticks, ctx, teamColor);
+                }
+            }
+        }
+    };
+
+    var deleteObject = function(gameObject) {
+        GridSquareContainer[gameObject.getX()][gameObject.getY()].pop();
+    }
 
     function clicked(e) {
         switch (e.button) {
@@ -110,6 +143,7 @@ export const Grid = (function() {
     };
 
     var rightClickToMove = function(event) {
+        console.log("fire");
         let gridX = event.clientX - 10;
         let gridY = event.clientY - 10;
         let x = Math.floor(gridX / dimension);
@@ -209,8 +243,12 @@ export const Grid = (function() {
         getDimension,
         getGridX,
         getGridY,
+        getGridSize,
+        addGameObject,
+        deleteObject,
         setGameObjectPosition,
         setDefaultTileSet,
+        animateObjects,
         clicked,
         showCoords,
         rightClickToMove,

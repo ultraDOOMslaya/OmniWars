@@ -156,19 +156,25 @@ export const GameManager = (function() {
         }
 
         let total = attacker.getHitPoints() * damage;
+
         return total;
     };
 
     var dealDamage = function(enemyUnit) {
-        let attackerDamage = combat(selectedObject, enemyUnit) / 10;
+        let attackerDamage = Math.floor(combat(selectedObject, enemyUnit) / 10);
         let attackerModifier = Math.floor(Math.random() * 2);  // returns a random integer from 0 to 1
         attackerDamage = attackerDamage + attackerModifier;
         enemyUnit.takeDamage(attackerDamage);
 
-        let defenderDamage = combat(enemyUnit, selectedObject) / 10;
-        let defenderModifier = Math.floor(Math.random() * 2) + 1;  // returns a random integer from 0 to 2 (defender equalizer)
-        defenderDamage = defenderDamage + defenderModifier;
-        selectedObject.takeDamage(defenderDamage);
+        var distanceX = Math.abs(selectedObject.getX() - enemyUnit.getX());
+        var distanceY = Math.abs(selectedObject.getY() - enemyUnit.getY());
+
+        if (!enemyUnit.isRanged() && (distanceX <= 1 && distanceY <= 1)) {
+            let defenderDamage = Math.floor(combat(enemyUnit, selectedObject) / 10);
+            let defenderModifier = Math.floor(Math.random() * 2) + 1;  // returns a random integer from 0 to 2 (defender equalizer)
+            defenderDamage = defenderDamage + defenderModifier;
+            selectedObject.takeDamage(defenderDamage);
+        }
     };
 
     var myPublicAPI = {

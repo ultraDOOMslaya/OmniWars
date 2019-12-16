@@ -145,11 +145,17 @@ Unit.prototype.isTankBuster = function() {
     return this.tankBuster;
 };
 
+Unit.prototype.isRanged = function() {
+    if (this.attackRange > 1) {
+        return true;
+    }
+    return false;
+}
+
 Unit.prototype.takeDamage = function(value) {
     this.hitPoints = this.hitPoints - value;
     if (this.hitPoints <= 0) {
-        //probably needs something more involved...
-        delete this;
+        Grid.deleteObject(this);
     }
 }
 
@@ -178,5 +184,6 @@ function renderHitPoints(ctx, Colors, hitPoints, x, y) {
         ctx.strokeText(hitPoints, x, y)
         ctx.fillStyle = Colors.white;
         ctx.fillText(hitPoints, x, y);
+        ctx.strokeStyle='grey';
     }
 }
