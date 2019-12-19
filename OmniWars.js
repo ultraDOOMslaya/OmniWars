@@ -9,6 +9,7 @@
     import { Rocket } from "./Units/Rocket.js";
     import { AntiAir } from "./Units/AntiAir.js";
     import { Missile } from "./Units/Missile.js";
+import { Colors } from "./Colors.js";
 
     const turfColor = "#ADFF2F";
 
@@ -80,6 +81,27 @@
         });
     })();
 
+    function animateAirPort(x, y) {
+        ctx.fillStyle = 'grey';
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = Colors.black;
+
+        ctx.beginPath();
+        ctx.moveTo(x + 20, y + 45);
+        ctx.lineTo(x + 20, y + 35);
+        ctx.lineTo(x + 5, y + 35);
+        ctx.lineTo(x + 5, y + 15);
+        ctx.lineTo(x + 15, y + 5);
+        ctx.lineTo(x + 35, y + 5);
+        ctx.lineTo(x + 45, y + 15);
+        ctx.lineTo(x + 45, y + 35);
+        ctx.lineTo(x + 35, y + 45);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fill();
+        ctx.fillRect(x + 30, y + 20, 10, 20);
+    };
+
     let ticks = 0;
     function draw() {
         ticks = ticks + 1;
@@ -100,6 +122,10 @@
             ctx.fillRect(( focusTiles[tiles].x * Grid.getDimension() ), ( focusTiles[tiles].y * Grid.getDimension()), 50, 50);
         }
         
+        ctx.beginPath();
+        
+        animateAirPort(600, 400);
+
         Grid.animateObjects(ticks, ctx, redTeamColor);
 
         /*infantry.animate(ticks, ctx, redTeamColor);
