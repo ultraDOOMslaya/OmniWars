@@ -84,6 +84,7 @@ import { Colors } from "./Colors.js";
         });
     })();
 
+<<<<<<< HEAD
     (function() {
         var endTurn = document.getElementById("EndTurn");
 
@@ -204,6 +205,28 @@ import { Colors } from "./Colors.js";
         ctx.fillRect(x + 28, y + 23, 4, 4);
         ctx.fillRect(x + 35, y + 23, 4, 4); 
     }
+=======
+    function animateAirPort(x, y) {
+        ctx.fillStyle = 'grey';
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = Colors.black;
+
+        ctx.beginPath();
+        ctx.moveTo(x + 20, y + 45);
+        ctx.lineTo(x + 20, y + 35);
+        ctx.lineTo(x + 5, y + 35);
+        ctx.lineTo(x + 5, y + 15);
+        ctx.lineTo(x + 15, y + 5);
+        ctx.lineTo(x + 35, y + 5);
+        ctx.lineTo(x + 45, y + 15);
+        ctx.lineTo(x + 45, y + 35);
+        ctx.lineTo(x + 35, y + 45);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fill();
+        ctx.fillRect(x + 30, y + 20, 10, 20);
+    };
+>>>>>>> 2ef79936f89a7eb3f9f4c614d5bfd1983ece5dcb
 
     let ticks = 0;
     function draw() {
@@ -229,6 +252,10 @@ import { Colors } from "./Colors.js";
         cityFrameOne(200, 250, Colors.black);
         factoryFrameOne(100, 250, Colors.black);
         
+        ctx.beginPath();
+        
+        animateAirPort(600, 400);
+
         Grid.animateObjects(ticks, ctx, redTeamColor);
         
         Grid.cursorTick(ctx, ticks);
