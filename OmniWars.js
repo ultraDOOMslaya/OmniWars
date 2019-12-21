@@ -1,5 +1,6 @@
     import { showCoords, Grid } from "./Grid.js";
-    import { GameManager } from "./GameManager.js"
+    import { GameManager } from "./GameManager.js";
+    import { PlayerManager } from "./PlayerManager.js";
     import { GameObject } from "./GameObject.js";
     import { Unit } from "./Unit.js";
     import { StaticObject } from "./StaticObject.js";
@@ -9,6 +10,7 @@
     import { Rocket } from "./Units/Rocket.js";
     import { AntiAir } from "./Units/AntiAir.js";
     import { Missile } from "./Units/Missile.js";
+import { Colors } from "./Colors.js";
 
     const turfColor = "#ADFF2F";
 
@@ -18,6 +20,8 @@
     const size = Grid.getGridSize();
     const canvasWidth = 800;
     const canvasHeight = 600;
+
+    const defaultLineWidth = 3;
 
     var canvas = document.getElementById('canvas');
     canvas.width = canvasWidth;
@@ -80,6 +84,127 @@
         });
     })();
 
+    (function() {
+        var endTurn = document.getElementById("EndTurn");
+
+        endTurn.addEventListener('click', function() {
+            PlayerManager.endTurn();
+        });
+    })();
+
+    function cityFrameOne(x, y, windowColor) {
+        ctx.fillStyle = Colors.industrialGray;
+
+        //Middle Building
+        ctx.beginPath();
+        ctx.moveTo(x + 20, y + 40);
+        ctx.lineTo(x + 15, y + 5);
+        ctx.lineTo(x + 35, y + 5);
+        ctx.lineTo(x + 30, y + 40);
+        ctx.lineTo(x + 20, y + 40);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fill();
+
+        //Right Building
+        ctx.beginPath();
+        ctx.moveTo(x + 40, y + 42);
+        ctx.lineTo(x + 45, y + 12);
+        ctx.lineTo(x + 25, y + 12);
+        ctx.lineTo(x + 20, y + 42);
+        ctx.lineTo(x + 40, y + 42);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fill();
+
+        ctx.fillStyle = windowColor;
+        ctx.beginPath();
+        ctx.fillRect(x + 38, y + 18, 4, 4);
+        ctx.fillRect(x + 30, y + 18, 4, 4);
+
+        ctx.fillRect(x + 37, y + 28, 4, 4);
+        ctx.fillRect(x + 29, y + 28, 4, 4);
+
+        ctx.fillStyle = Colors.industrialGray;
+
+        //Left Building
+        ctx.beginPath();
+        ctx.moveTo(x + 15, y + 45);
+        ctx.lineTo(x + 10, y + 15);
+        ctx.lineTo(x + 30, y + 15);
+        ctx.lineTo(x + 30, y + 45);
+        ctx.lineTo(x + 15, y + 45);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fill();
+
+        ctx.fillStyle = windowColor;
+        ctx.beginPath();
+        ctx.fillRect(x + 13, y + 20, 4, 4);
+        ctx.fillRect(x + 23, y + 20, 4, 4);
+
+        ctx.fillRect(x + 14, y + 30, 4, 4);
+        ctx.fillRect(x + 22, y + 30, 4, 4); 
+    }
+    
+    function factoryFrameOne(x, y, windowColor) {
+        ctx.fillStyle = Colors.industrialGray;
+
+        //Building
+        ctx.beginPath();
+        ctx.moveTo(x + 10, y + 40);
+        ctx.lineTo(x + 10, y + 20);
+        ctx.lineTo(x + 40, y + 20);
+        ctx.lineTo(x + 40, y + 40);
+        ctx.lineTo(x + 10, y + 40);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fill();
+
+        //Roof
+        ctx.beginPath();
+        ctx.moveTo(x + 7, y + 20);
+        ctx.lineTo(x + 10, y + 10);
+        ctx.lineTo(x + 40, y + 10);
+        ctx.lineTo(x + 43, y + 20);
+        ctx.lineTo(x + 7, y + 20);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fill();
+
+        //Left Garage Door
+        ctx.fillStyle = Colors.black;
+        ctx.beginPath();
+        ctx.moveTo(x + 15, y + 40);
+        ctx.lineTo(x + 15, y + 30);
+        ctx.lineTo(x + 20, y + 30);
+        ctx.lineTo(x + 20, y + 40);
+        ctx.lineTo(x + 15, y + 40);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fill();
+
+        //Left Garage Door
+        ctx.fillStyle = Colors.black;
+        ctx.beginPath();
+        ctx.moveTo(x + 30, y + 40);
+        ctx.lineTo(x + 30, y + 30);
+        ctx.lineTo(x + 35, y + 30);
+        ctx.lineTo(x + 35, y + 40);
+        ctx.lineTo(x + 30, y + 40);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fill();
+
+        ctx.fillStyle = windowColor;
+        ctx.beginPath();
+        ctx.fillRect(x + 11, y + 23, 4, 4);
+        ctx.fillRect(x + 18, y + 23, 4, 4);
+
+        ctx.fillRect(x + 28, y + 23, 4, 4);
+        ctx.fillRect(x + 35, y + 23, 4, 4); 
+    }
+
     let ticks = 0;
     function draw() {
         ticks = ticks + 1;
@@ -92,27 +217,23 @@
         
         ctx.fillStyle = turfColor;
         ctx.fillRect(0, 0, 800, 600);
-        ctx.lineWidth = 3;
+        ctx.lineWidth = defaultLineWidth;
 
         let focusTiles = GameManager.getFocusZone();
         for (var tiles = 0; tiles < focusTiles.length; tiles++) {
             ctx.fillStyle = GameManager.getZoneColor();
             ctx.fillRect(( focusTiles[tiles].x * Grid.getDimension() ), ( focusTiles[tiles].y * Grid.getDimension()), 50, 50);
         }
+
+        cityFrameOne(200, 200, Colors.black);
+        cityFrameOne(200, 250, Colors.black);
+        factoryFrameOne(100, 250, Colors.black);
         
         Grid.animateObjects(ticks, ctx, redTeamColor);
-
-        /*infantry.animate(ticks, ctx, redTeamColor);
-        tank.animate(ticks, ctx, redTeamColor);
-        rocket.animate(ticks, ctx, redTeamColor);
-        antiAir.animate(ticks, ctx, redTeamColor);
-        missile.animate(ticks, ctx, redTeamColor);        
-        mech.animate(ticks, ctx, hotPinkTeamColor);*/
         
         Grid.cursorTick(ctx, ticks);
 
         
-
 
 
         ctx.beginPath();

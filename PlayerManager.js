@@ -6,7 +6,7 @@ export const PlayerManager = (function() {
     let players = new Array();
     let activePlayer = {};
 
-    var startTurn = function() {
+    var endTurn = function() {
         if (activePlayer instanceof Player) {
             players.push(activePlayer);
             activePlayer = players.shift();
@@ -17,8 +17,13 @@ export const PlayerManager = (function() {
         
     };
 
+    var upKeep = function() {
+
+    };
+
     var myPublicAPI = {
-        startTurn
+        endTurn,
+        upKeep
     };
 
     return myPublicAPI;

@@ -7,6 +7,7 @@ export const Colors = (function() {
     var black = "#000000";
     var brown = "#964b00";
     var gray = "#dcdcdc";
+    var industrialGray = "#d3d3d3";
     var white = "#fff";
     var skin = "#ffdbac";
     var skyBlue = "#87ceeb";
@@ -45,6 +46,7 @@ export const Colors = (function() {
         black,
         brown,
         gray,
+        industrialGray,
         skin,
         skyBlue,
         focusColor,
