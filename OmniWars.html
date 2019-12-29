@@ -15,14 +15,43 @@
         </menu>
     </dialog>
 
+    <dialog id="factoryDialog">
+        <menu>
+            <span>
+                <span id="infantryCost">1000</span>&nbsp;&nbsp;&nbsp;&nbsp;<span> Infantry</span>&nbsp;&nbsp;&nbsp;&nbsp;<button id="purchaseInfantry">Purchase</button>
+            </span>
+            <span>
+                <span id="mechCost">3000</span>&nbsp;&nbsp;&nbsp;&nbsp;<span> Mech</span>&nbsp;&nbsp;&nbsp;&nbsp;<button id="purchaseMech">Purchase</button>
+            </span>
+            <span>
+                <span id="reconCost">4000</span>&nbsp;&nbsp;&nbsp;&nbsp;<span> Recon</span>&nbsp;&nbsp;&nbsp;&nbsp;<button id="purchaseRecon">Purchase</button>
+            </span>
+            <span>
+                <span id="artilleryCost">6000</span>&nbsp;&nbsp;&nbsp;&nbsp;<span> Artillery</span>&nbsp;&nbsp;&nbsp;&nbsp;<button id="purchaseArtillery">Purchase</button>
+            </span>
+            <span>
+                <span id="tankCost">8000</span>&nbsp;&nbsp;&nbsp;&nbsp;<span> Tank</span>&nbsp;&nbsp;&nbsp;&nbsp;<button id="purchaseTank">Purchase</button>
+            </span>
+            <span>
+                <span id="rocketCost">15000</span>&nbsp;&nbsp;&nbsp;&nbsp;<span> Rocket</span>&nbsp;&nbsp;&nbsp;&nbsp;<button id="purchaseRocket">Purchase</button>
+            </span>
+            <span>
+                <span id="chadTankCost">16000</span>&nbsp;&nbsp;&nbsp;&nbsp;<span> *Chad Tank</span>&nbsp;&nbsp;&nbsp;&nbsp;<button id="purchaseChadTank">Purchase</button>
+            </span>
+        </menu>
+    </dialog>
+
     <canvas id="canvas" width="800" height="600" style="border: 1px solid; width: 800px; height: 600px"></canvas>
     <p id='showCoords'></p>
 
     <button onclick="showDialog()">Show dialog</button>
+    <button onclick="showFactoryDialog()">Show Factory</button>
     <button id="ReEnableUnits">ReEnable Units</button>
     <button id="EndTurn">End Turn</button>
 
     <dialog id="step2Dialog">Exhaust Dialog</dialog>
+    <p id="player1Credits">Player1 Credits: <span id="player1CreditValue">0</span></p>
+    <p id="player2Credits">Player2 Credits: <span id="player2CreditValue">0</span></p>
 </body>
 
 
@@ -36,8 +65,15 @@
     
     function closeDialog() { 
       x.close(); 
-    } 
-    </script>
+    }
+    
+    var y = document.getElementById("factoryDialog")
+
+    function showFactoryDialog() {
+        y.show();
+    }
+
+</script>
 
 <script src="OmniWars.js"></script>
 
@@ -58,5 +94,21 @@ menu {
 
 menu button {
     margin-bottom: 5px;
+}
+
+menu span button {
+    float: right;
+}
+
+span {
+    color:black;
+}
+
+#player1Credits {
+    color: #E50000;
+}
+
+#player2Credits {
+    color: #ff69b4;
 }
 </style>

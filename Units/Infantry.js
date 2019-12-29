@@ -2,7 +2,7 @@ import { CombatStats } from "../CombatStats";
 import { Unit } from "../Unit";
 import { Colors } from "../Colors";
 
-export function Infantry(x, y) {
+export function Infantry(x, y, playerObject) {
     console.log(CombatStats);
     this.movementRange = CombatStats.infantry.movementRange;
     this.attackRange = CombatStats.infantry.attackRange;
@@ -14,7 +14,7 @@ export function Infantry(x, y) {
     this.tankBuster = CombatStats.infantry.tankBuster;
     this.groundOnly = CombatStats.infantry.groundOnly;
     this.unitType = CombatStats.infantry.unitType;
-    Unit.call(this, x, y, this.directCombat, this.armored, this.movementRange, this.attackRange, animateFacingLeftFrameOne, 
+    Unit.call(this, x, y, playerObject, this.directCombat, this.armored, this.movementRange, this.attackRange, animateFacingLeftFrameOne, 
               animateFacingLeftFrameTwo, this.attackPower, this.airAttack, this.defense, this.tankBuster, this.groundOnly, this.unitType);
 };
 

@@ -2,6 +2,7 @@ import { GameManager } from "./GameManager";
 import { StaticObject } from "./StaticObject";
 import { Turf } from "./StaticObjects/Turf"
 import { Unit } from "./Unit";
+import { Building } from "./Building";
 
 export function showCoords(event) {
     var x = event.clientX - 10;
@@ -93,6 +94,9 @@ export const Grid = (function() {
                 if (GridSquareContainer[a][b][GridSquareContainer[a][b].length - 1] instanceof Unit) {
                     GridSquareContainer[a][b][GridSquareContainer[a][b].length - 1].animate(ticks, ctx, teamColor);
                 }
+                else if (GridSquareContainer[a][b][GridSquareContainer[a][b].length - 1] instanceof Building) {
+                    GridSquareContainer[a][b][GridSquareContainer[a][b].length - 1].animate(ticks, ctx);
+                }
             }
         }
     };
@@ -178,7 +182,35 @@ export const Grid = (function() {
         GridSquareContainer[gameObject.getX()][gameObject.getY()].push(gameObject);
     };
 
+    var playerBuildings = function(player) {
+        let total = 0;
+        for (let a = 0; a < GridSquareContainer.length - 1; ++a) {
+            for (let b = 0; b < GridSquareContainer[a].length - 1; ++b) {
+                if (GridSquareContainer[a][b][GridSquareContainer[a][b].length - 1] instanceof Building) {
+                    if (GridSquareContainer[a][b][GridSquareContainer[a][b].length - 1].getOwner() != null) {
+                        if (GridSquareContainer[a][b][GridSquareContainer[a][b].length - 1].getOwner().getPlayerId() === player.getPlayerId()) {
+                            total++;
+                        }
+                    }
+                }
+            }
+        }
+        return total;
+    };
 
+    var getPlayerUnits = function(player) {
+        var playerUnits = new Array();
+        for (let a = 0; a < GridSquareContainer.length - 1; ++a) {
+            for (let b = 0; b < GridSquareContainer[a].length - 1; ++b) {
+                if (GridSquareContainer[a][b][GridSquareContainer[a][b].length - 1] instanceof Unit) {
+                    if (GridSquareContainer[a][b][GridSquareContainer[a][b].length - 1].getOwner().getPlayerId() === player.getPlayerId()) {
+                        playerUnits.push(GridSquareContainer[a][b][GridSquareContainer[a][b].length - 1]);
+                    }
+                }
+            }
+        }
+        return playerUnits;
+    };
 
     var cursorTick = function(ctx, offset) {
         let x = GameManager.getSelectedCoords().x * dimension;
@@ -244,6 +276,7 @@ export const Grid = (function() {
         getGridX,
         getGridY,
         getGridSize,
+        getPlayerUnits,
         addGameObject,
         deleteObject,
         setGameObjectPosition,
@@ -253,6 +286,7 @@ export const Grid = (function() {
         showCoords,
         rightClickToMove,
         replacePositions,
+        playerBuildings,
         cursorTick
     };
 

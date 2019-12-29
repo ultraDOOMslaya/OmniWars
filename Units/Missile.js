@@ -2,7 +2,7 @@ import { CombatStats } from "../CombatStats";
 import { Unit } from "../Unit";
 import { Colors } from "../Colors";
 
-export function Missile(x, y) {
+export function Missile(x, y, playerObject) {
     this.movementRange = CombatStats.missile.movementRange;
     this.attackRange = CombatStats.missile.attackRange;
     this.directCombat = CombatStats.missile.directCombat;
@@ -13,7 +13,7 @@ export function Missile(x, y) {
     this.tankBuster = CombatStats.missile.tankBuster;
     this.groundOnly = CombatStats.missile.groundOnly;
     this.unitType = CombatStats.missile.unitType;
-    Unit.call(this, x, y, this.directCombat, this.armored, this.movementRange, this.attackRange, animateFacingRightFrameOne, 
+    Unit.call(this, x, y, playerObject, this.directCombat, this.armored, this.movementRange, this.attackRange, animateFacingRightFrameOne, 
               animateFacingRightFrameTwo, this.attackPower, this.airAttack, this.defense, this.tankBuster, this.groundOnly, this.unitType);
 };
 

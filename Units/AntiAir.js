@@ -2,7 +2,7 @@ import { CombatStats } from "../CombatStats";
 import { Unit } from "../Unit";
 import { Colors } from "../Colors";
 
-export function AntiAir(x, y) {
+export function AntiAir(x, y, playerObject) {
     this.movementRange = CombatStats.antiAir.movementRange;
     this.attackRange = CombatStats.antiAir.attackRange;
     this.directCombat = CombatStats.antiAir.directCombat;
@@ -13,7 +13,7 @@ export function AntiAir(x, y) {
     this.tankBuster = CombatStats.antiAir.tankBuster;
     this.groundOnly = CombatStats.antiAir.groundOnly;
     this.unitType = CombatStats.antiAir.unitType;
-    Unit.call(this, x, y, this.directCombat, this.armored, this.movementRange, this.attackRange, animateFacingRightFrameOne, 
+    Unit.call(this, x, y, playerObject, this.directCombat, this.armored, this.movementRange, this.attackRange, animateFacingRightFrameOne, 
               animateFacingRightFrameTwo, this.attackPower, this.airAttack, this.defense, this.tankBuster, this.groundOnly, this.unitType);
 };
 

@@ -2,7 +2,7 @@ import { CombatStats } from "../CombatStats";
 import { Unit } from "../Unit";
 import { Colors } from "../Colors";
 
-export function Mech(x, y) {
+export function Mech(x, y, playerObject) {
     this.movementRange = CombatStats.mech.movementRange;
     this.attackRange = CombatStats.mech.attackRange;
     this.directCombat = CombatStats.mech.directCombat;
@@ -13,7 +13,7 @@ export function Mech(x, y) {
     this.tankBuster = CombatStats.mech.tankBuster;
     this.groundOnly = CombatStats.mech.groundOnly;
     this.unitType = CombatStats.mech.unitType;
-    Unit.call(this, x, y, this.directCombat, this.armored, this.movementRange, this.attackRange, animateFacingLeftFrameOne, 
+    Unit.call(this, x, y, playerObject, this.directCombat, this.armored, this.movementRange, this.attackRange, animateFacingLeftFrameOne, 
               animateFacingLeftFrameTwo, this.attackPower, this.airAttack, this.defense, this.tankBuster, this.groundOnly, this.unitType);
 };
 

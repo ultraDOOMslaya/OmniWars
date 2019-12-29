@@ -1,7 +1,12 @@
-export function GameObject(x, y, isStaticObject) {
+export function GameObject(x, y, playerObject, isStaticObject) {
+    this.owner = playerObject;
     this.x = x;
     this.y = y;
     this.isStaticObject = isStaticObject;
+};
+
+GameObject.prototype.getOwner = function() {
+    return this.owner;
 };
 
 GameObject.prototype.getX = function() {

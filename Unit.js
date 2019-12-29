@@ -2,7 +2,7 @@ import { GameObject } from "./GameObject";
 import { Grid } from "./Grid";
 import { Colors } from "./Colors";
 
-export function Unit(x, y, directCombat, armored, movementRange, attackRange, animateIdleOne, animateIdleTwo, attackPower, airAttack, defense, tankBuster, groundOnly, unitType) {
+export function Unit(x, y, playerObject, directCombat, armored, movementRange, attackRange, animateIdleOne, animateIdleTwo, attackPower, airAttack, defense, tankBuster, groundOnly, unitType) {
     /* Unit States */
     this.animationState = 'Idle';
     this.exhausted = false;
@@ -25,7 +25,7 @@ export function Unit(x, y, directCombat, armored, movementRange, attackRange, an
     this.unitType = unitType;
     this.hitPoints = 10;
     
-    GameObject.call(this, x, y, false);
+    GameObject.call(this, x, y, playerObject, false);
 };
 
 Unit.prototype = Object.create(GameObject.prototype);
@@ -73,11 +73,12 @@ Unit.prototype.setHitPoints = function(hitPoints) {
     this.hitPoints = hitPoints;
 };
 
-GameObject.prototype.exhaustUnit = function() {
+Unit.prototype.exhaustUnit = function() {
     this.exhausted = true;
 };
 
-GameObject.prototype.refreshUnit = function() {
+Unit.prototype.refreshUnit = function() {
+    console.log("unit to refresh: {}", this);
     this.exhausted = false;
 };
 
@@ -93,7 +94,7 @@ Unit.prototype.flush = function() {
     this.exhausted = false;
 };
 
-GameObject.prototype.hasHaste = function() {
+Unit.prototype.hasHaste = function() {
     return this.hasHaste;
 };
 

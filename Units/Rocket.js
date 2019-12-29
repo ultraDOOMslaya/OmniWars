@@ -2,7 +2,7 @@ import { CombatStats } from "../CombatStats";
 import { Unit } from "../Unit";
 import { Colors } from "../Colors";
 
-export function Rocket(x, y) {
+export function Rocket(x, y, playerObject) {
     this.movementRange = CombatStats.rocket.movementRange;
     this.attackRange = CombatStats.rocket.attackRange;
     this.directCombat = CombatStats.rocket.directCombat;
@@ -13,7 +13,7 @@ export function Rocket(x, y) {
     this.tankBuster = CombatStats.rocket.tankBuster;
     this.groundOnly = CombatStats.rocket.groundOnly;
     this.unitType = CombatStats.rocket.unitType;
-    Unit.call(this, x, y, this.directCombat, this.armored, this.movementRange, this.attackRange, animateFacingRightFrameOne, 
+    Unit.call(this, x, y, playerObject, this.directCombat, this.armored, this.movementRange, this.attackRange, animateFacingRightFrameOne, 
               animateFacingRightFrameTwo, this.attackPower, this.airAttack, this.defense, this.tankBuster, this.groundOnly, this.unitType);
 };
 
