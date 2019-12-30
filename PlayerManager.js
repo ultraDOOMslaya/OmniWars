@@ -9,9 +9,12 @@ export const PlayerManager = (function() {
     let activePlayer = {};
     let creditMultiplyer = 1000;
 
+    var turnOne = function() {
+        activePlayer = players.shift();
+        upKeep();
+    };
 
     var endTurn = function() {
-        console.log("end turn");
         if (activePlayer instanceof Player) {
             players.push(activePlayer);
             activePlayer = players.shift();
@@ -37,6 +40,15 @@ export const PlayerManager = (function() {
         players.push(player);
     }
 
+    var doesControl = function(playerId) {
+        console.log("player id: {}", playerId);
+        console.log("activeplayer: {}", playerId);
+        if (activePlayer.getPlayerId() === playerId) {
+            return true;
+        }
+        return false;
+    };
+
     function refreshActivePlayerUnits(units) {
         console.log(units);
         for (var x = 0; x < units.length; x++) {
@@ -46,9 +58,11 @@ export const PlayerManager = (function() {
     }
 
     var myPublicAPI = {
+        turnOne,
         endTurn,
         upKeep,
-        addPlayer
+        addPlayer,
+        doesControl
     };
 
     return myPublicAPI;

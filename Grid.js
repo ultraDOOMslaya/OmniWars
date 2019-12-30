@@ -140,7 +140,13 @@ export const Grid = (function() {
         }
         else {
             GameManager.setSelectedUnit(cords);
-            GameManager.step1Initiate();
+            if (GameManager.isSelectedObjectUnit()) {
+                GameManager.step1Initiate();
+            }
+            else if (GameManager.isSelectedObjectBuilding()) {
+                GameManager.launchBuildingDialog();
+            }
+            
             var coords = "X coordinates: " + x + ", Y coordinates: " + y + ", game object: " + JSON.stringify(gameObject);
             document.getElementById('showCoords').innerHTML = coords;
         }

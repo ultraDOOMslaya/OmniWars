@@ -132,6 +132,7 @@
         ctx.fillRect(x + 30, y + 20, 10, 20);
     };
 */
+    PlayerManager.turnOne();
 
     let ticks = 0;
     function draw() {
@@ -207,6 +208,7 @@
         }
         if (isEscape) {
             GameManager.resetState();
+
         }
     };
     

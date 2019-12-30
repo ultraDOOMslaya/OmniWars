@@ -3,6 +3,9 @@ import { UnitTypes } from "./Units/UnitTypes";
 import { Unit } from "./Unit";
 import { Colors } from "./Colors";
 import { Grid } from "./Grid";
+import { Building } from "./Building";
+import { Factory } from "./Buildings/Factory";
+import { PlayerManager } from "./PlayerManager";
 
 export const GameManager = (function() {
 
@@ -94,10 +97,24 @@ export const GameManager = (function() {
     };
 
     var step1Initiate = function() {
+        if (!checkOwnership()) {
+            return;
+        }
+        
         if (isSelectedObjectUnit()) {
             if (!selectedObject.isExhausted()) {
                 document.getElementById('step1Dialog').show();
             }
+        }
+    };
+
+    var launchBuildingDialog = function() {
+        if (!checkOwnership()) {
+            return;
+        }
+
+        if (selectedObject instanceof Factory) {
+            document.getElementById('factoryDialog').show();
         }
     };
 
@@ -120,6 +137,13 @@ export const GameManager = (function() {
         return false;
     };
 
+    var isSelectedObjectBuilding = function() {
+        if (selectedObject instanceof Building) {
+            return true;
+        }
+        return false;
+    }
+
     var putItBack = function() {
         if (isSelectedObjectUnit()) {
             selectedObject.moveTo(originalX, originalY);
@@ -131,6 +155,7 @@ export const GameManager = (function() {
         putItBack();
         document.getElementById("step1Dialog").close();
         document.getElementById("step2Dialog").close();
+        document.getElementById("factoryDialog").close();
     };
 
     var commitUnit = function() {
@@ -143,7 +168,6 @@ export const GameManager = (function() {
     };
 
     var combat = function(attacker, enemyUnit) {
-
         let damage = attacker.getAttackPower();
         if (enemyUnit.getUnitType() === UnitTypes.Air) {
             damage = attacker.getAirAttack();
@@ -177,6 +201,13 @@ export const GameManager = (function() {
         }
     };
 
+    function checkOwnership() {
+        if (PlayerManager.doesControl(selectedObject.getOwner().getPlayerId())) {
+            return true;
+        }
+        return false;
+    }
+
     var myPublicAPI = {
         getSelectedCoords,
         getSelectedUnit,
@@ -186,7 +217,9 @@ export const GameManager = (function() {
         step1Initiate,
         step1AfterMath,
         step2AfterMath,
+        launchBuildingDialog,
         isSelectedObjectUnit,
+        isSelectedObjectBuilding,
         putItBack,
         resetState,
         commitUnit,
