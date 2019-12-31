@@ -92,8 +92,8 @@ export const Grid = (function() {
     };
 
     var animateObjects = function(ticks, ctx, teamColor) {
-        for (let a = 0; a < GridSquareContainer.length - 1; ++a) {
-            for (let b = 0; b < GridSquareContainer[a].length - 1; ++b) {
+        for (let a = 0; a < GridSquareContainer.length; ++a) {
+            for (let b = 0; b < GridSquareContainer[a].length; ++b) {
                 for (let c = 0; c < GridSquareContainer[a][b].length; ++c) {
                     if (GridSquareContainer[a][b][c] instanceof Building || GridSquareContainer[a][b][c] instanceof Unit || GridSquareContainer[a][b][c] instanceof Sea) {
                         GridSquareContainer[a][b][c].animate(ticks, ctx);

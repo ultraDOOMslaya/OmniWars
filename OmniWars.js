@@ -44,13 +44,47 @@ import { Sea } from "./StaticObjects/Sea.js";
 
     Grid.setDefaultTileSet();
     
-    Grid.addGameObject(9, 2, new City(9, 2, player1));
-    Grid.addGameObject(4, 4, new City(4, 4, player1));
-    Grid.addGameObject(4, 5, new City(4, 5, player1));
-    Grid.addGameObject(4, 6, new City(4, 6, player1));
-    Grid.addGameObject(2, 4, new Factory(2, 4, null));
-    Grid.addGameObject(2, 5, new Factory(2, 5, player1));
-    Grid.addGameObject(3, 7, new Factory(3, 7, player2));
+    //Pink team base
+    Grid.addGameObject(2, 9, new Factory(2, 9, player1));
+    Grid.addGameObject(1, 10, new Factory(1, 10, player1));
+    Grid.addGameObject(0, 9, new City(0, 9, player1));
+    Grid.addGameObject(0, 11, new City(0, 11, player1));
+    Grid.addGameObject(2, 11, new City(2, 11, player1));
+
+    //Green team base
+    Grid.addGameObject(13, 2, new Factory(13, 2, player2));
+    Grid.addGameObject(14, 1, new Factory(14, 1, player2));
+    Grid.addGameObject(15, 2, new City(15, 2, player2));
+    Grid.addGameObject(13, 0, new City(13, 0, player2));
+    Grid.addGameObject(15, 0, new City(15, 0, player2));
+
+    //Top island cities
+    Grid.addGameObject(8, 0, new City(8, 0, null));
+    Grid.addGameObject(7, 0, new City(7, 0, null));
+    Grid.addGameObject(6, 2, new City(6, 2, null));
+    Grid.addGameObject(9, 2, new Factory(9, 2, null));
+
+    //Bottom island cities
+    Grid.addGameObject(8, 11, new City(8, 11, null));
+    Grid.addGameObject(7, 11, new City(7, 11, null));
+    Grid.addGameObject(9, 9, new City(9, 9, null));
+    Grid.addGameObject(6, 9, new Factory(6, 9, null));
+
+    //Middle bar cities
+    Grid.addGameObject(11, 5, new Factory(11, 5, null));
+    Grid.addGameObject(4, 6, new Factory(4, 6, null));
+    
+    //Middile bar city cluster
+    Grid.addGameObject(8, 5, new City(8, 5, null));
+    Grid.addGameObject(7, 6, new City(7, 6, null));
+    Grid.addGameObject(8, 6, new City(8, 6, null));
+    Grid.addGameObject(7, 5, new City(7, 5, null));
+
+    //Top corner city
+    Grid.addGameObject(0, 0, new City(0, 0, null));
+
+    Grid.addGameObject(15, 11, new City(15, 11, null));
+
 
     //edges top/botom
     Grid.addGameObject(2, 2, new Sea(3, 0));

@@ -31,7 +31,7 @@ export const GameManager = (function() {
     var getZoneColor = function() {
         if (selectedObject instanceof Unit) {
             if (selectedObject.isMoving()) {
-                return Colors.focusColor;
+                return Colors.skyBlue;
             }
             else if (selectedObject.isAttacking()){
                 return Colors.attackColor;
