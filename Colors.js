@@ -1,5 +1,6 @@
 export const Colors = (function() {
     var turfColor = "#ADFF2F";
+    var seaColor = "#4d4dff";
     var beachColor = "#ffbca4";
     var redTeamColor = "#E50000";
     var hotPinkTeamColor = "#ff69b4";
@@ -38,6 +39,7 @@ export const Colors = (function() {
 
     var publicAPI = {
         turfColor,
+        seaColor,
         beachColor,
         redTeamColor,
         hotPinkTeamColor,

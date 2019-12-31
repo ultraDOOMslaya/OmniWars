@@ -1,8 +1,13 @@
 import { GameManager } from "./GameManager";
 import { StaticObject } from "./StaticObject";
-import { Turf } from "./StaticObjects/Turf"
+import { Turf } from "./StaticObjects/Turf";
+import { Sea } from "./StaticObjects/Sea";
 import { Unit } from "./Unit";
 import { Building } from "./Building";
+import { GameObject } from "./GameObject";
+import { PlayerManager } from "./PlayerManager";
+import { Infantry } from "./Units/Infantry";
+import { Mech } from "./Units/Mech";
 
 export function showCoords(event) {
     var x = event.clientX - 10;
@@ -72,7 +77,6 @@ export const Grid = (function() {
         let x = gridX;
         let y = gridY;
         
-        console.log(GridSquareContainer[x][y]);
         if (typeof GridSquareContainer[x][y] !== 'undefined') {
             GridSquareContainer[x][y].push(gameObject);
         }
@@ -82,7 +86,6 @@ export const Grid = (function() {
         let x = gridX / dimension;
         let y = gridY / dimension;
         
-        console.log(GridSquareContainer[x][y]);
         if (typeof GridSquareContainer[x][y] !== 'undefined') {
             GridSquareContainer[x][y].push(gameObject);
         }
@@ -91,19 +94,63 @@ export const Grid = (function() {
     var animateObjects = function(ticks, ctx, teamColor) {
         for (let a = 0; a < GridSquareContainer.length - 1; ++a) {
             for (let b = 0; b < GridSquareContainer[a].length - 1; ++b) {
-                if (GridSquareContainer[a][b][GridSquareContainer[a][b].length - 1] instanceof Unit) {
-                    GridSquareContainer[a][b][GridSquareContainer[a][b].length - 1].animate(ticks, ctx, teamColor);
-                }
-                else if (GridSquareContainer[a][b][GridSquareContainer[a][b].length - 1] instanceof Building) {
-                    GridSquareContainer[a][b][GridSquareContainer[a][b].length - 1].animate(ticks, ctx);
+                for (let c = 0; c < GridSquareContainer[a][b].length; ++c) {
+                    if (GridSquareContainer[a][b][c] instanceof Building || GridSquareContainer[a][b][c] instanceof Unit || GridSquareContainer[a][b][c] instanceof Sea) {
+                        GridSquareContainer[a][b][c].animate(ticks, ctx);
+                    }
                 }
             }
         }
     };
 
+    var isImpassable = function(x, y) {
+        var impassable = false;
+        
+        //boundaries
+        if (typeof GridSquareContainer[x] === 'undefined') {
+            return impassable;
+        }
+
+        if (typeof GridSquareContainer[x][y] === 'undefined') {
+            return impassable;
+        }
+
+        for (let z = 0; z < GridSquareContainer[x][y].length; ++z) {
+
+            if (GridSquareContainer[x][y][z] instanceof Unit) {
+                impassable = true;
+            }
+            if (GridSquareContainer[x][y][z] instanceof Sea) {
+                impassable = true;
+            }
+        }
+        return impassable;
+    }
+
+    var isCapturable = function(x, y) {
+        var impassable = false;
+        for (let z = 0; z < GridSquareContainer[x][y].length; ++z) {
+            if (GridSquareContainer[x][y][z] instanceof Building //&& 
+                //PlayerManager.activePlayer.getPlayerId() != GridSquareContainer[x][y][z].getOwner().getPlayerId()
+                && (GameManager.getSelectedUnit() instanceof Infantry || GameManager.getSelectedUnit() instanceof Mech)) {
+                impassable = true;
+            }
+        }
+        return impassable;
+    };
+
+    var getBuilding = function(x, y) {
+        for (let z = 0; z < GridSquareContainer[x][y].length; ++z) {
+            if (GridSquareContainer[x][y][z] instanceof Building) {
+                return GridSquareContainer[x][y][z];
+            }
+        }
+        return null;
+    };
+
     var deleteObject = function(gameObject) {
         GridSquareContainer[gameObject.getX()][gameObject.getY()].pop();
-    }
+    };
 
     function clicked(e) {
         switch (e.button) {
@@ -199,6 +246,14 @@ export const Grid = (function() {
                         }
                     }
                 }
+                else if (GridSquareContainer[a][b][GridSquareContainer[a][b].length - 1] instanceof Unit &&
+                         GridSquareContainer[a][b][GridSquareContainer[a][b].length - 2] instanceof Building) {
+                    if (GridSquareContainer[a][b][GridSquareContainer[a][b].length - 2].getOwner() != null) {
+                        if (GridSquareContainer[a][b][GridSquareContainer[a][b].length - 2].getOwner().getPlayerId() === player.getPlayerId()) {
+                            total++;
+                        }
+                    }
+                }
             }
         }
         return total;
@@ -290,6 +345,9 @@ export const Grid = (function() {
         animateObjects,
         clicked,
         showCoords,
+        isImpassable,
+        isCapturable,
+        getBuilding,
         rightClickToMove,
         replacePositions,
         playerBuildings,

@@ -8,12 +8,14 @@
     import { Infantry } from "./Units/Infantry.js";
     import { Mech } from "./Units/Mech.js";
     import { Tank } from "./Units/Tank.js"
+    import { ChadTank } from "./Units/ChadTank.js"
     import { Rocket } from "./Units/Rocket.js";
     import { AntiAir } from "./Units/AntiAir.js";
     import { Missile } from "./Units/Missile.js";
     import { Colors } from "./Colors.js";
     import { City } from "./Buildings/City.js";
     import { Factory } from "./Buildings/Factory.js";
+import { Sea } from "./StaticObjects/Sea.js";
 
 
     const turfColor = "#ADFF2F";
@@ -41,22 +43,119 @@
     var ctx = canvas.getContext('2d');
 
     Grid.setDefaultTileSet();
-
     
-    Grid.addGameObject(9, 4, new Infantry(9, 4, player1));
-    Grid.addGameObject(9, 6, new Tank(9, 6, player1));
-    Grid.addGameObject(8, 6, new Rocket(8, 6, player1));
-    Grid.addGameObject(7, 6, new AntiAir(7, 6, player1));
-    Grid.addGameObject(6, 6, new Missile(6, 6, player1));
-    Grid.addGameObject(9, 3, new Mech(9, 3, player1));
-    
-    Grid.addGameObject(4, 4, new City(4, 4, null));
-    Grid.addGameObject(4, 5, new City(4, 5, null));
+    Grid.addGameObject(9, 2, new City(9, 2, player1));
+    Grid.addGameObject(4, 4, new City(4, 4, player1));
+    Grid.addGameObject(4, 5, new City(4, 5, player1));
     Grid.addGameObject(4, 6, new City(4, 6, player1));
     Grid.addGameObject(2, 4, new Factory(2, 4, null));
     Grid.addGameObject(2, 5, new Factory(2, 5, player1));
     Grid.addGameObject(3, 7, new Factory(3, 7, player2));
+
+    //edges top/botom
+    Grid.addGameObject(2, 2, new Sea(3, 0));
+    Grid.addGameObject(2, 2, new Sea(4, 0));
+    Grid.addGameObject(2, 2, new Sea(5, 0));
+    Grid.addGameObject(2, 2, new Sea(6, 0));
+
+    Grid.addGameObject(2, 2, new Sea(3, 11));
+    Grid.addGameObject(2, 2, new Sea(4, 11));
+    Grid.addGameObject(2, 2, new Sea(5, 11));
+    Grid.addGameObject(2, 2, new Sea(6, 11));
+
+    //edges top/botom
+    Grid.addGameObject(2, 2, new Sea(12, 0));
+    Grid.addGameObject(2, 2, new Sea(11, 0));
+    Grid.addGameObject(2, 2, new Sea(10, 0));
+    Grid.addGameObject(2, 2, new Sea(9, 0));
     
+    Grid.addGameObject(2, 2, new Sea(12, 11));
+    Grid.addGameObject(2, 2, new Sea(11, 11));
+    Grid.addGameObject(2, 2, new Sea(10, 11));
+    Grid.addGameObject(2, 2, new Sea(9, 11));
+
+
+    //island edge top
+    Grid.addGameObject(2, 2, new Sea(1, 2));
+    Grid.addGameObject(2, 2, new Sea(2, 2));
+    Grid.addGameObject(2, 2, new Sea(3, 2));
+    Grid.addGameObject(2, 2, new Sea(4, 2));
+    Grid.addGameObject(2, 2, new Sea(5, 2));
+
+    Grid.addGameObject(2, 2, new Sea(12, 2));
+    Grid.addGameObject(2, 2, new Sea(11, 2));
+    Grid.addGameObject(2, 2, new Sea(10, 2));
+
+    //island edge bottom
+    Grid.addGameObject(2, 2, new Sea(14, 9));
+    Grid.addGameObject(2, 2, new Sea(13, 9));
+    Grid.addGameObject(2, 2, new Sea(12, 9));
+    Grid.addGameObject(2, 2, new Sea(11, 9));
+    Grid.addGameObject(2, 2, new Sea(10, 9));
+
+    Grid.addGameObject(2, 2, new Sea(5, 9));
+    Grid.addGameObject(2, 2, new Sea(4, 9));
+    Grid.addGameObject(2, 2, new Sea(3, 9));
+    
+    //left base moat block
+    Grid.addGameObject(2, 2, new Sea(1, 3));
+    Grid.addGameObject(2, 2, new Sea(1, 4));
+    Grid.addGameObject(2, 2, new Sea(1, 5));
+    Grid.addGameObject(2, 2, new Sea(1, 6));
+    Grid.addGameObject(2, 2, new Sea(1, 7));
+    Grid.addGameObject(2, 2, new Sea(2, 3));
+    Grid.addGameObject(2, 2, new Sea(2, 4));
+    Grid.addGameObject(2, 2, new Sea(2, 5));
+    Grid.addGameObject(2, 2, new Sea(2, 6));
+    Grid.addGameObject(2, 2, new Sea(2, 7));
+
+    //right base moat block
+    Grid.addGameObject(2, 2, new Sea(14, 8));
+    Grid.addGameObject(2, 2, new Sea(14, 7));
+    Grid.addGameObject(2, 2, new Sea(14, 6));
+    Grid.addGameObject(2, 2, new Sea(14, 5));
+    Grid.addGameObject(2, 2, new Sea(14, 4));
+    Grid.addGameObject(2, 2, new Sea(13, 4));
+    Grid.addGameObject(2, 2, new Sea(13, 5));
+    Grid.addGameObject(2, 2, new Sea(13, 6));
+    Grid.addGameObject(2, 2, new Sea(13, 7));
+    Grid.addGameObject(2, 2, new Sea(13, 8));
+    
+    //top center moat island block
+    Grid.addGameObject(2, 2, new Sea(3, 3));
+    Grid.addGameObject(2, 2, new Sea(4, 3));
+    Grid.addGameObject(2, 2, new Sea(5, 3));
+    Grid.addGameObject(2, 2, new Sea(6, 3));
+    Grid.addGameObject(2, 2, new Sea(7, 3));
+    Grid.addGameObject(2, 2, new Sea(8, 3));
+    Grid.addGameObject(2, 2, new Sea(9, 3));
+    Grid.addGameObject(2, 2, new Sea(10, 3));
+    Grid.addGameObject(2, 2, new Sea(3, 4));
+    Grid.addGameObject(2, 2, new Sea(4, 4));
+    Grid.addGameObject(2, 2, new Sea(5, 4));
+    Grid.addGameObject(2, 2, new Sea(6, 4));
+    Grid.addGameObject(2, 2, new Sea(7, 4));
+    Grid.addGameObject(2, 2, new Sea(8, 4));
+
+
+    //top center moat island block
+    Grid.addGameObject(2, 2, new Sea(12, 8));
+    Grid.addGameObject(2, 2, new Sea(11, 8));
+    Grid.addGameObject(2, 2, new Sea(5, 8));
+    Grid.addGameObject(2, 2, new Sea(6, 8));
+    Grid.addGameObject(2, 2, new Sea(7, 8));
+    Grid.addGameObject(2, 2, new Sea(8, 8));
+    Grid.addGameObject(2, 2, new Sea(9, 8));
+    Grid.addGameObject(2, 2, new Sea(10, 8));
+    Grid.addGameObject(2, 2, new Sea(12, 7));
+    Grid.addGameObject(2, 2, new Sea(11, 7));
+    
+    Grid.addGameObject(2, 2, new Sea(7, 7));
+    Grid.addGameObject(2, 2, new Sea(8, 7));
+    Grid.addGameObject(2, 2, new Sea(9, 7));
+    Grid.addGameObject(2, 2, new Sea(10, 7));
+
+
     (function() {
         var step1Dialog = document.getElementById("step1Dialog"); 
         var moveButton = document.getElementById('selectMovement');
@@ -102,6 +201,34 @@
     })();
 
     (function() {
+        var step2Dialog = document.getElementById("step2DialogInfantry"); 
+        var attackButton = document.getElementById('selectAttackInfantry');
+        var captureButton = document.getElementById('selectCapture');
+        var waitButton = document.getElementById('selectWaitInfantry');
+        var cancelButton = document.getElementById('cancelStep2Infantry');
+
+        attackButton.addEventListener('click', function() {
+            step2Dialog.close();
+            GameManager.getSelectedUnit().setAttacking();  
+        });
+
+        captureButton.addEventListener('click', function() {
+            step2Dialog.close();
+            GameManager.captureBuilding();
+        });
+
+        waitButton.addEventListener('click', function() {
+            step2Dialog.close();
+            GameManager.commitUnit();
+        });
+
+        cancelButton.addEventListener('click', function() {
+            step2Dialog.close();
+            GameManager.putItBack();
+        });
+    })();
+
+    (function() {
         var endTurn = document.getElementById("EndTurn");
 
         endTurn.addEventListener('click', function() {
@@ -109,6 +236,43 @@
         });
     })();
     
+    (function() {
+        var purchaseInfantry = document.getElementById("purchaseInfantry");
+        var purchaseMech = document.getElementById("purchaseMech");
+        var purchaseRecon = document.getElementById("purchaseRecon");
+        var purchaseArtillery = document.getElementById("purchaseArtillery");
+        var purchaseTank = document.getElementById("purchaseTank");
+        var purchaseRocket = document.getElementById("purchaseRocket");
+        var purchaseChadTank = document.getElementById("purchaseChadTank");
+
+        purchaseInfantry.addEventListener('click', function() {
+            PlayerManager.purchase("Infantry");
+        });
+
+        purchaseMech.addEventListener('click', function() {
+            PlayerManager.purchase("Mech");
+        });
+        
+        purchaseRecon.addEventListener('click', function() {
+            PlayerManager.purchase("Recon");
+        });
+
+        purchaseArtillery.addEventListener('click', function() {
+            PlayerManager.purchase("Artillery");
+        });
+
+        purchaseTank.addEventListener('click', function() {
+            PlayerManager.purchase("Tank");
+        });
+
+        purchaseRocket.addEventListener('click', function() {
+            PlayerManager.purchase("Rocket");
+        });
+
+        purchaseChadTank.addEventListener('click', function() {
+            PlayerManager.purchase("ChadTank");
+        });
+    })();
 
     /*
     function animateAirPort(x, y) {
@@ -162,7 +326,8 @@
 
         
 
-
+        /* Heart */
+        /*
         ctx.beginPath();
         ctx.moveTo(75, 40);
         ctx.bezierCurveTo(75, 37, 70, 25, 50, 25);
@@ -172,6 +337,7 @@
         ctx.bezierCurveTo(130, 62.5, 130, 25, 100, 25);
         ctx.bezierCurveTo(85, 25, 75, 37, 75, 40);
         ctx.fill();
+        */
     }
     
     setInterval(function() {

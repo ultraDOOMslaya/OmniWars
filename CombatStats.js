@@ -12,7 +12,8 @@ export const CombatStats = (function() {
         defense: 0,
         tankBuster: false,
         groundOnly: false,
-        unitType: UnitTypes.Ground
+        unitType: UnitTypes.Ground,
+        cost: 1000
     };
 
     var mech = {
@@ -25,7 +26,8 @@ export const CombatStats = (function() {
         defense: 0,
         tankBuster: true,
         groundOnly: false,
-        unitType: UnitTypes.Ground
+        unitType: UnitTypes.Ground,
+        cost: 3000,
     };
 
     var antiAir = {
@@ -38,20 +40,22 @@ export const CombatStats = (function() {
         defense: 1,
         tankBuster: false,
         groundOnly: false,
-        unitType: UnitTypes.Ground
+        unitType: UnitTypes.Ground,
+        cost: 4000
     };
 
     var missile = {
         movementRange: 4,
-        attackRange: 1,
+        attackRange: 3,
         directCombat: false,
         armored: true,
-        attackPower: 0,
+        attackPower: 5,
         airAttack: 10,
         defense: 0,
         tankBuster: false,
         groundOnly: false,
-        unitType: UnitTypes.Ground
+        unitType: UnitTypes.Ground,
+        cost: 6000
     };
 
     var rocket = {
@@ -59,12 +63,13 @@ export const CombatStats = (function() {
         attackRange: 5,
         directCombat: false,
         armored: true,
-        attackPower: 9,
+        attackPower: 7,
         airAttack: 0,
         defense: 0,
         tankBuster: false,
         groundOnly: true,
-        unitType: UnitTypes.Ground
+        unitType: UnitTypes.Ground,
+        cost: 15000
     };
 
     var tank = {
@@ -77,7 +82,22 @@ export const CombatStats = (function() {
         defense: 2,
         tankBuster: true,
         groundOnly: true,
-        unitType: UnitTypes.Ground
+        unitType: UnitTypes.Ground,
+        cost: 8000
+    };
+    
+    var chadTank = {
+        movementRange: 5,
+        attackRange: 1,
+        directCombat: true,
+        armored: true,
+        attackPower: 6,
+        airAttack: 2,
+        defense: 3,
+        tankBuster: true,
+        groundOnly: true,
+        unitType: UnitTypes.Ground,
+        cost: 16000
     };
 
     var myPublicAPI = {
@@ -86,7 +106,8 @@ export const CombatStats = (function() {
         antiAir,
         missile,
         rocket,
-        tank
+        tank,
+        chadTank
     };
 
     return myPublicAPI;

@@ -160,8 +160,9 @@ Unit.prototype.takeDamage = function(value) {
     }
 }
 
-Unit.prototype.animate = function(tick, ctx, teamColor) {
+Unit.prototype.animate = function(tick, ctx) {
     let baseColorPercentage = 0;
+    let teamColor = this.getOwner().getTeamColor();
     if (this.isExhausted()) {
         baseColorPercentage = -35;
     }

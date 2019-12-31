@@ -20,114 +20,110 @@ export function Tank(x, y, playerObject) {
 Tank.prototype = Object.create(Unit.prototype);
 
 function animateFacingRightFrameOne(ctx, teamColor, x, y) {
-    ctx.fillStyle = teamColor;
-
-    //Tank Barrel
-    ctx.beginPath();
-    ctx.moveTo(x + 30, y + 17);
-    ctx.lineTo(x + 40, y + 17);
-    ctx.lineTo(x + 40, y + 27);
-    ctx.lineTo(x + 30, y + 27);
-    ctx.closePath();
+    
+    //Anti-Air Tread
+    ctx.fillStyle = Colors.black;
+    ctx.moveTo(x + 10, y + 46);
+    ctx.lineTo(x + 34, y + 46);
     ctx.stroke();
-    ctx.fill();
-
-    //Tank head
-    ctx.beginPath();
-    ctx.moveTo(x + 10, y + 37);
-    ctx.lineTo(x + 10, y + 22);
-    ctx.lineTo(x + 15, y + 17);
-    ctx.lineTo(x + 30, y + 17);
-    ctx.lineTo(x + 37, y + 27);
-    ctx.lineTo(x + 37, y + 32);
-    ctx.lineTo(x + 37, y + 37);
-    ctx.closePath();
-    ctx.stroke();
-    ctx.fill();
-
-    //Tank Tread
+    
     ctx.fillStyle = Colors.gainsborough;
     ctx.beginPath();
-    ctx.arc(x + 15, y + 40, 5, 0, 2 * Math.PI);
-    ctx.arc(x + 25, y + 40, 5, 0, 2 * Math.PI);
-    ctx.arc(x + 35, y + 40, 5, 0, 2 * Math.PI);
+    ctx.arc(x + 10, y + 43, 3, 0, 2 * Math.PI);
+    ctx.arc(x + 18, y + 43, 3, 0, 2 * Math.PI);
+    ctx.arc(x + 26, y + 43, 3, 0, 2 * Math.PI);
+    ctx.arc(x + 34, y + 43, 3, 0, 2 * Math.PI);
+    ctx.stroke();
+    ctx.fill();
+    
+    //Anti-Air Cannon 1
+    ctx.fillStyle = teamColor;
+    ctx.beginPath();
+    ctx.moveTo(x + 26, y + 24);
+    ctx.lineTo(x + 38, y + 24);
+    ctx.lineTo(x + 38, y + 28);
+    ctx.lineTo(x + 26, y + 28);
+    ctx.closePath();
     ctx.stroke();
     ctx.fill();
 
-    ctx.fillStyle = Colors.black;
-    ctx.moveTo(x + 15, y + 40);
-    ctx.lineTo(x + 35, y + 40);
-    ctx.stroke();
-
-    //Tank body
+    //Anti-Air Head
     ctx.fillStyle = teamColor;
     ctx.beginPath();
-    ctx.moveTo(x + 5, y + 27);
-    ctx.lineTo(x + 25, y + 27);
-    ctx.lineTo(x + 25, y + 30);
-    ctx.lineTo(x + 35, y + 30);
-    ctx.lineTo(x + 35, y + 33);
-    ctx.lineTo(x + 45, y + 33);
-    ctx.lineTo(x + 45, y + 42);
-    ctx.lineTo(x + 5, y + 42);
-    ctx.lineTo(x + 5, y + 27);
+    ctx.moveTo(x + 10, y + 35);
+    ctx.lineTo(x + 10, y + 25);
+    ctx.lineTo(x + 12, y + 23);
+    ctx.lineTo(x + 28, y + 23);
+    ctx.lineTo(x + 30, y + 25);
+    ctx.lineTo(x + 30, y + 35);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fill();
+
+    //Anti-Air body
+    ctx.fillStyle = teamColor;
+    ctx.beginPath();
+    ctx.moveTo(x + 5, y + 30);
+    ctx.lineTo(x + 15, y + 30);
+    ctx.lineTo(x + 20, y + 35);
+    ctx.lineTo(x + 40, y + 35);
+    ctx.lineTo(x + 40, y + 40);
+    ctx.lineTo(x + 5, y + 40);
     ctx.closePath();
     ctx.stroke();
     ctx.fill();
 }
 
 function animateFacingRightFrameTwo(ctx, teamColor, x, y) {
-    ctx.fillStyle = teamColor;
-
-    //Tank Barrel
-    ctx.beginPath();
-    ctx.moveTo(x + 30, y + 15);
-    ctx.lineTo(x + 50, y + 15);
-    ctx.lineTo(x + 50, y + 25);
-    ctx.lineTo(x + 30, y + 25);
-    ctx.closePath();
+    
+    //Anti-Air Tread
+    ctx.fillStyle = Colors.black;
+    ctx.moveTo(x + 10, y + 46);
+    ctx.lineTo(x + 34, y + 46);
     ctx.stroke();
-    ctx.fill();
-
-    //Tank head
-    ctx.beginPath();
-    ctx.moveTo(x + 10, y + 35);
-    ctx.lineTo(x + 10, y + 20);
-    ctx.lineTo(x + 15, y + 15);
-    ctx.lineTo(x + 30, y + 15);
-    ctx.lineTo(x + 37, y + 25);
-    ctx.lineTo(x + 37, y + 30);
-    ctx.lineTo(x + 37, y + 35);
-    ctx.closePath();
-    ctx.stroke();
-    ctx.fill();
-
-    //Tank Tread
+    
     ctx.fillStyle = Colors.gainsborough;
     ctx.beginPath();
-    ctx.arc(x + 15, y + 40, 5, 0, 2 * Math.PI);
-    ctx.arc(x + 25, y + 40, 5, 0, 2 * Math.PI);
-    ctx.arc(x + 35, y + 40, 5, 0, 2 * Math.PI);
+    ctx.arc(x + 10, y + 43, 3, 0, 2 * Math.PI);
+    ctx.arc(x + 18, y + 43, 3, 0, 2 * Math.PI);
+    ctx.arc(x + 26, y + 43, 3, 0, 2 * Math.PI);
+    ctx.arc(x + 34, y + 43, 3, 0, 2 * Math.PI);
+    ctx.stroke();
+    ctx.fill();
+    
+    //Anti-Air Cannon 1
+    ctx.fillStyle = teamColor;
+    ctx.beginPath();
+    ctx.moveTo(x + 26, y + 26);
+    ctx.lineTo(x + 36, y + 26);
+    ctx.lineTo(x + 36, y + 30);
+    ctx.lineTo(x + 26, y + 30);
+    ctx.closePath();
     ctx.stroke();
     ctx.fill();
 
-    ctx.fillStyle = Colors.black;
-    ctx.moveTo(x + 15, y + 40);
-    ctx.lineTo(x + 35, y + 40);
-    ctx.stroke();
-
-    //Tank body
+    //Anti-Air Head
     ctx.fillStyle = teamColor;
     ctx.beginPath();
-    ctx.moveTo(x + 5, y + 25);
-    ctx.lineTo(x + 25, y + 25);
-    ctx.lineTo(x + 25, y + 28);
-    ctx.lineTo(x + 35, y + 28);
-    ctx.lineTo(x + 35, y + 31);
-    ctx.lineTo(x + 45, y + 31);
-    ctx.lineTo(x + 45, y + 40);
-    ctx.lineTo(x + 5, y + 40);
-    ctx.lineTo(x + 5, y + 25);
+    ctx.moveTo(x + 10, y + 37);
+    ctx.lineTo(x + 10, y + 27);
+    ctx.lineTo(x + 12, y + 25);
+    ctx.lineTo(x + 28, y + 25);
+    ctx.lineTo(x + 30, y + 27);
+    ctx.lineTo(x + 30, y + 37);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fill();
+
+    //Anti-Air body
+    ctx.fillStyle = teamColor;
+    ctx.beginPath();
+    ctx.moveTo(x + 5, y + 32);
+    ctx.lineTo(x + 15, y + 32);
+    ctx.lineTo(x + 20, y + 37);
+    ctx.lineTo(x + 40, y + 37);
+    ctx.lineTo(x + 40, y + 42);
+    ctx.lineTo(x + 5, y + 42);
     ctx.closePath();
     ctx.stroke();
     ctx.fill();

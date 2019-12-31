@@ -79,13 +79,31 @@ export const GameManager = (function() {
                         y: ( startCoords.start_y + (movementRange - a))
                     }
 
-                    if (b == 0) {
-                        focusTiles.push({x: coords.x, y: coords.y});
+                    if (selectedObject.isMoving()) {
+                        if (b == 0) {
+                            if (!Grid.isImpassable(coords.x, coords.y)) {
+                                focusTiles.push({x: coords.x, y: coords.y});
+                            }
+                        }
+                        else {
+                            if (!Grid.isImpassable((coords.x - b), coords.y)) {
+                                focusTiles.push({x: (coords.x - b), y: coords.y});
+                            }
+                            if (!Grid.isImpassable((coords.x + b), coords.y)) {
+                                focusTiles.push({x: (coords.x + b), y: coords.y});
+                            }
+                        }
                     }
                     else {
-                        focusTiles.push({x: (coords.x - b), y: coords.y});
-                        focusTiles.push({x: (coords.x + b), y: coords.y});
+                        if (b == 0) {
+                            focusTiles.push({x: coords.x, y: coords.y});
+                        }
+                        else {
+                            focusTiles.push({x: (coords.x - b), y: coords.y});
+                            focusTiles.push({x: (coords.x + b), y: coords.y});
+                        }
                     }
+                    
                 }
                 iterations = iterations + diamondOffset;
                 if(iterations === movementRange) {
@@ -118,16 +136,30 @@ export const GameManager = (function() {
         }
     };
 
+    var captureBuilding = function() {
+        let coords = getSelectedCoords();
+        var buildingToCapture = Grid.getBuilding(coords.x, coords.y);
+        buildingToCapture.setOwner(PlayerManager.getActivePlayer());
+        commitUnit();
+    };
+
     var step1AfterMath = function(x, y) {
         selectedObject.moveTo(x, y);
         selectedObject.standBy();
-        document.getElementById('step2Dialog').show();
+        if (Grid.isCapturable(x, y)) {
+            console.log("capturable");
+            document.getElementById('step2DialogInfantry').show();   
+        }
+        else {
+            document.getElementById('step2Dialog').show();
+        }
     };
 
     var step2AfterMath = function(enemyUnit) {
+        commitUnit();
         dealDamage(enemyUnit);
         selectedObject.standBy();
-        commitUnit();
+        
     }
 
     var isSelectedObjectUnit = function() {
@@ -166,6 +198,12 @@ export const GameManager = (function() {
             selectedObject.exhaustUnit();
         }
     };
+
+    var commitUnitBeforeAttack = function() {
+        Grid.replacePositions(originalX, originalY, selectedObject);
+        originalX = selectedObject.getX();
+        originalY = selectedObject.getY();
+    }
 
     var combat = function(attacker, enemyUnit) {
         let damage = attacker.getAttackPower();
@@ -217,7 +255,9 @@ export const GameManager = (function() {
         step1Initiate,
         step1AfterMath,
         step2AfterMath,
+        commitUnitBeforeAttack,
         launchBuildingDialog,
+        captureBuilding,
         isSelectedObjectUnit,
         isSelectedObjectBuilding,
         putItBack,

@@ -27,6 +27,10 @@ Player.prototype.addCredits = function(creditsToAdd) {
     this.credits = this.credits + creditsToAdd;
 };
 
+Player.prototype.subtractCredits = function(creditsToSubtract) {
+    this.credits = this.credits - creditsToSubtract;
+};
+
 Player.prototype.getTeamColor = function() {
     return this.teamColor;
 };

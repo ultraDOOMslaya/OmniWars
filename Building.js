@@ -12,6 +12,7 @@ export function Building(x, y, playerObject, animateBuilding) {
 Building.prototype = Object.create(StaticObject.prototype);
 
 Building.prototype.setOwner = function(newOwner) {
+    console.log("new ownership: {}", newOwner);
     this.owner = newOwner;
 };
 
